@@ -38,11 +38,11 @@ export async function signup(formData) {
   const { error } = await supabase.auth.signUp(data)
 
   if (error) {
-    redirect('/error')
+    redirect('/login?error=gecersiz-giris')
   }
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/login')
 }
 
 export async function signInWithGithub() {
