@@ -1,31 +1,21 @@
+import { NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url)
-  const token_hash = searchParams.get('token_hash')
-  const type = searchParams.get('type') 
-  const next = searchParams.get('next') ?? '/private'
+  const code = searchParams.get('code')
+  const next = '/private'  // Force next to always be /private
 
-  if (token_hash && type) {
+  if (code) {
     const supabase = createClient()
-
-    const { error } = await supabase.auth.verifyOtp({
-      type,
-      token_hash,
-    })
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error) {
-      // Determine whether to redirect to local or production URL
-      const isLocalEnv = process.env.NODE_ENV === 'development'
-      const baseUrl = isLocalEnv ? 'http://localhost:3000' : 'https://nutship.com'
-      
-      // Redirect user to the correct domain with the next path
-      return redirect(`${baseUrl}${next}`)
+      // Always redirect to nutship.com/private regardless of environment
+      return NextResponse.redirect(`https://nutship.com${next}`)
     }
   }
 
-  // Redirect the user to an error page in case of failure
-  const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://nutship.com'
-  return redirect(`${baseUrl}/error`)
+  // If there's an error, redirect the user to an error page with instructions
+  return NextResponse.redirect('https://nutship.com/auth/auth-code-error')
 }
