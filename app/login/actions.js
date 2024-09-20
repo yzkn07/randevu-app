@@ -50,7 +50,7 @@ export async function signInWithGithub() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: `https://www.nutship.com/auth/callback`,
+      redirectTo: `http://localhost:3000/auth/callback`,
     },
   })
   if (data.url) {
