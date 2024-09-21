@@ -20,8 +20,12 @@ export default function Home() {
             <p className="font-semibold text-lg text-blue-600">şube seçin</p>
           </div>
 
-          <div className="p-2 bg-slate-100 rounded-lg">
+          <div className="p-2 bg-slate-100 rounded-t-lg">
             <SubeCard/>
+          </div>
+
+          <div className="p-2 rounded-b-lg border-t border-black bg-purple-300 "> 
+            <button className="bg-red-300" type="button">devam et</button>
           </div>
         </div>
         

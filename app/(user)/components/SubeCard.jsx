@@ -1,7 +1,7 @@
 export default function SubeCard() {
     return(
         <>
-            <div>
+            <div className="bg-emerald-200 p-2 rounded-lg">
                 <p>MALİPOL MEGA</p>
             </div>
         </>
