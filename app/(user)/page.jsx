@@ -1,16 +1,15 @@
 "use client"
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+
 import { useEffect, useState } from "react";
 import { getSubeler } from "./actions";
 import BosRandevuForm from "./components/BosRandevuForm";
 import SelectedInfos from "./components/SelectedInfos";
-import { Suspense } from "react";
+
 
 
 export default  function Home() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
+
 
 
   const [subeler, setSubeler] = useState([])
@@ -49,17 +48,15 @@ export default  function Home() {
             <p className="font-semibold text-lg text-blue-600">şube seçin</p>
           </div>
 
-        <Suspense>
+
           <div className="p-2 bg-slate-100 rounded-t-lg">
             {subeler && <BosRandevuForm  
               subeler={subeler}
               selectedSubeId={selectedSubeId}
               setSelectedSubeId={setSelectedSubeId}
-              searchParams={searchParams}
-              router={router} 
             />}
           </div>
-        </Suspense>
+
 
           <div className="p-2 rounded-b-lg border-t border-black bg-purple-300 "> 
             <button className="bg-red-300" type="button">devam et</button>

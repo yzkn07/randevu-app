@@ -1,5 +1,7 @@
 "use client";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { Suspense } from "react";
 
 export default function BosRandevuForm({
   subeler,
@@ -8,7 +10,8 @@ export default function BosRandevuForm({
   searchParams,
   router,
 }) {
-
+    const searchParams = useSearchParams()
+    const router = useRouter()
     
   //url'de sube-id varsa ona göre sube id'yi set ediyor.
   useEffect(() => {
@@ -28,6 +31,7 @@ export default function BosRandevuForm({
   }
 
   return (
+   <Suspense>
     <div className="bg-emerald-200 p-2 rounded-lg">
       <ul>
         {subeler.map((e) => (
@@ -43,5 +47,6 @@ export default function BosRandevuForm({
         ))}
       </ul>
     </div>
+   </Suspense> 
   );
 }
