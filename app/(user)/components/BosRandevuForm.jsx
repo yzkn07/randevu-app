@@ -7,6 +7,11 @@ export default function BosRandevuForm({
   subeler,
   selectedSubeId,
   setSelectedSubeId,
+  bolumler,
+  selectedBolumId,
+  setSelectedBolumId
+
+
 }) {
     const  searchParams = useSearchParams()
     const router = useRouter()
@@ -21,17 +26,25 @@ export default function BosRandevuForm({
 
   const handleSube = (id) => {
     setSelectedSubeId(id);
-    router.push(`?sube-id=${id}`);
+    router.push(`?sube-id=${selectedSubeId}`);
+    
   };
 
   if (!subeler || subeler.length === 0) {
     return <p>Şube yükleniyor...</p>;
   }
 
+  const handleBolum = (bolumId) => {
+    setSelectedBolumId(bolumId); 
+    router.push(`?sube-id=${selectedSubeId}&bolum-id=${bolumId}`)
+
+    
+  }
+
   return (
 
-    <div className="bg-emerald-200 p-2 rounded-lg">
-      <ul>
+    <div className="bg-emerald-200 p-2 rounded-lg max-h-64 overflow-y-scroll">
+        <ul>
         {subeler.map((e) => (
             <li
             key={e.id}  
@@ -43,7 +56,23 @@ export default function BosRandevuForm({
                 {e.sube_adi}
             </li>
         ))}
-      </ul>
+        </ul>
+
+        <ul>
+        {bolumler.map((bolum) => (
+                    <li
+                    key={bolum.id}  
+                    onClick={() => handleBolum(bolum.id)}  
+                    className={`p-2 m-2 rounded-lg ${
+                        selectedBolumId === bolum.id ? "bg-blue-500 text-white" : "bg-gray-200"
+                    } hover:cursor-pointer`}
+                    >
+                    {bolum.bolum_adi}
+                    </li>
+                ))}  
+        </ul>
+
+
     </div>
 
   );

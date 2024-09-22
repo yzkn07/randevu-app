@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
-import { getSubeler } from "./actions";
+import { getBolumler, getSubeler } from "./actions";
 import BosRandevuForm from "./components/BosRandevuForm";
 import SelectedInfos from "./components/SelectedInfos";
 import { Suspense } from "react";
@@ -14,8 +14,8 @@ export default  function Home() {
 
   const [subeler, setSubeler] = useState([])
   const [selectedSubeId, setSelectedSubeId] = useState(null)
-
-
+  const [bolumler, setBolumler] = useState([]);  
+  const [selectedBolumId, setSelectedBolumId] = useState(null);
 
   useEffect(() => {
     async function fetchSubeler() {
@@ -25,12 +25,19 @@ export default  function Home() {
     }
     fetchSubeler()
   },[])
-  
-
-
   const selectedSube = selectedSubeId ? subeler.find(sube => sube.id === selectedSubeId) : null;
   
+  
+  const handleDevam = async () => {
+    if(selectedSubeId){
+      const bolumlerData = await getBolumler(selectedSubeId)
+      setBolumler(bolumlerData);
+      
+    }
+  }
+  const selectedBolum = selectedBolumId ? bolumler.find(bolum => bolum.id === selectedBolumId) : null;
 
+  
   return (
   <>
     <div className="flex justify-between items-center p-2">
@@ -56,6 +63,9 @@ export default  function Home() {
                 subeler={subeler}
                 selectedSubeId={selectedSubeId}
                 setSelectedSubeId={setSelectedSubeId}
+                bolumler={bolumler}
+                selectedBolumId={selectedBolumId}
+                setSelectedBolumId={setSelectedBolumId}
               />
             </Suspense>
             }
@@ -63,16 +73,19 @@ export default  function Home() {
 
 
           <div className="p-2 rounded-b-lg border-t border-black bg-purple-300 "> 
-            <button className="bg-red-300" type="button">devam et</button>
+            <button onClick={handleDevam} className="bg-red-300" type="button">devam et</button>
           </div>
 
         </div>
 
             {/* seçilen bilgileri gösterme */}
-              {selectedSube && <SelectedInfos 
-                selectedSube={selectedSube}
-              />}
-          
+              {selectedSube && 
+                <SelectedInfos 
+                  selectedSube={selectedSube}
+                  selectedBolum={selectedBolum}
+                  />
+              }
+  
       </div>
   </>
   );

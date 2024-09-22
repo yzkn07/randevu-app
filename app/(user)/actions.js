@@ -11,3 +11,40 @@ export async function getSubeler() {
     
     return { subeler };
 }
+
+export async function getBolumler(subeId) {
+    const supabase = createClient()
+    const {data : bolumlerTablo, error} = await supabase
+        .from('doktorlar')
+        .select(`
+            id,
+            doktor_adi,
+            doktor_soyadi,
+            bolum_id,
+            sube_id,
+            doktor_unvani, 
+            bolumler (
+                    id,
+                    bolum_adi
+            ),
+            subeler (
+              id,
+              sube_adi
+            )
+          `)
+    .eq('sube_id', subeId)
+
+    if (error) {
+        console.log('Error fetching bolumler:', error);
+
+    }
+
+  // Hem bolum_adi hem de id'yi benzersiz hale getirelim, burayı araştır.
+  const uniqueBolumler = Array.from(new Map(
+    bolumlerTablo.map(doktor => [doktor.bolumler.bolum_adi, doktor.bolumler])
+).values());
+
+return uniqueBolumler;
+
+    
+}
