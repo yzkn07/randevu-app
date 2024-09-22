@@ -15,17 +15,51 @@ export default async function PrivatePage() {
     redirect('/login')
   }
 
+  const formatRandevuZamani = (baslangic_zamani, bitis_zamani) => {
+    const baslangicDate = new Date(baslangic_zamani);
+    const bitisDate = new Date(bitis_zamani);
+
+    // Başlangıç zamanı: Hem tarih hem de saat
+    const formattedBaslangic = baslangicDate.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true,
+    });
+
+    // Bitiş zamanı: Sadece saat
+    const formattedBitis = bitisDate.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true,
+    });
+
+    return `Randevu Zamanı: ${formattedBaslangic} - ${formattedBitis}`;
+};
+
+
   const randevu_slotlari = await GetRandevu() || [];
+
   const formattedData = randevu_slotlari.map(randevu => ({
     id: randevu.id,
-    baslangic_zamani: new Date(randevu.baslangic_zamani).toLocaleString(),
-    bitis_zamani: new Date(randevu.bitis_zamani).toLocaleString(),
+    baslangic_zamani: randevu.baslangic_zamani,
+    bitis_zamani: randevu.bitis_zamani,
+    randevu_zamani: formatRandevuZamani(randevu.baslangic_zamani, randevu.bitis_zamani),
     musaitlik_durumu: randevu.musaitlik_durumu,
     hasta: `${randevu.hastalar.hasta_adi} ${randevu.hastalar.hasta_soyadi}`,
     doktor: `${randevu.doktorlar.doktor_adi} ${randevu.doktorlar.doktor_soyadi}`,
     bolum: randevu.doktorlar.bolumler.bolum_adi,
     sube: randevu.doktorlar.subeler.sube_adi 
   }))
+
+  
+  
+  
+  
 
   // console.log(data.user);
   
@@ -34,7 +68,7 @@ export default async function PrivatePage() {
   return (
     <div>
         {/* <Image src={data.user.user_metadata.avatar_url} width={100} height={100} alt='user' priority/> */}
-      Hello {data.user.email}
+      Hoşgeldiniz {data.user.email}
       <span>
         <SignOutButton /> 
       </span>
@@ -48,7 +82,7 @@ export default async function PrivatePage() {
               <p>Şube: {e.sube}</p>
               <p>Bölüm: {e.bolum}</p>
               <p>Doktor: {e.doktor}</p>
-              <p>Randevu Zamanı: {e.baslangic_zamani} - {e.bitis_zamani}</p>
+              <p>Randevu Zamanı: {e.randevu_zamani}</p>
             </li>
           ))) : (
             <p>Henüz randevunuz yok.</p>

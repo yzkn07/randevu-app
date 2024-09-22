@@ -1,8 +1,36 @@
-
+"use client"
 import Link from "next/link";
-import SubeCard from "./components/SubeCard";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getSubeler } from "./actions";
+import BosRandevuForm from "./components/BosRandevuForm";
+import SelectedInfos from "./components/SelectedInfos";
 
-export default function Home() {
+
+
+export default  function Home() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  const [subeler, setSubeler] = useState([])
+  const [selectedSubeId, setSelectedSubeId] = useState(null)
+
+
+
+  useEffect(() => {
+    async function fetchSubeler() {
+      const subelerData = await getSubeler()
+      setSubeler(subelerData.subeler)
+      
+    }
+    fetchSubeler()
+  },[])
+  
+
+
+  const selectedSube = selectedSubeId ? subeler.find(sube => sube.id === selectedSubeId) : null;
+  
+
   return (
   <>
     <div className="flex justify-between items-center p-2">
@@ -21,14 +49,24 @@ export default function Home() {
           </div>
 
           <div className="p-2 bg-slate-100 rounded-t-lg">
-            <SubeCard/>
+
+            {subeler && <BosRandevuForm  
+              subeler={subeler}
+              selectedSubeId={selectedSubeId}
+              setSelectedSubeId={setSelectedSubeId} 
+            />}
           </div>
 
           <div className="p-2 rounded-b-lg border-t border-black bg-purple-300 "> 
             <button className="bg-red-300" type="button">devam et</button>
           </div>
+
         </div>
-        
+            
+              {selectedSube && <SelectedInfos 
+                selectedSube={selectedSube}
+                />}
+          
       </div>
   </>
   );
