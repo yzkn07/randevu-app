@@ -24,7 +24,7 @@ export default function BosRandevuForm({
   };
 
   if (!subeler || subeler.length === 0) {
-    return <p>Şube bulunamadı.</p>;
+    return <p>Şube yükleniyor...</p>;
   }
 
   return (
