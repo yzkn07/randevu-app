@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+// import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getSubeler } from "./actions";
 import BosRandevuForm from "./components/BosRandevuForm";
@@ -9,8 +9,8 @@ import SelectedInfos from "./components/SelectedInfos";
 
 
 export default  function Home() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  // const searchParams = useSearchParams()
+  // const router = useRouter()
 
   const [subeler, setSubeler] = useState([])
   const [selectedSubeId, setSelectedSubeId] = useState(null)
@@ -62,10 +62,11 @@ export default  function Home() {
           </div>
 
         </div>
-            
+
+            {/* seçilen bilgileri gösterme */}
               {selectedSube && <SelectedInfos 
                 selectedSube={selectedSube}
-                />}
+              />}
           
       </div>
   </>
