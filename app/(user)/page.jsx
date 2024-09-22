@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 import { getSubeler } from "./actions";
 import BosRandevuForm from "./components/BosRandevuForm";
 import SelectedInfos from "./components/SelectedInfos";
-
+import { Suspense } from "react";
 
 
 export default  function Home() {
   const searchParams = useSearchParams()
   const router = useRouter()
+
 
   const [subeler, setSubeler] = useState([])
   const [selectedSubeId, setSelectedSubeId] = useState(null)
@@ -48,8 +49,8 @@ export default  function Home() {
             <p className="font-semibold text-lg text-blue-600">şube seçin</p>
           </div>
 
+        <Suspense>
           <div className="p-2 bg-slate-100 rounded-t-lg">
-
             {subeler && <BosRandevuForm  
               subeler={subeler}
               selectedSubeId={selectedSubeId}
@@ -58,6 +59,7 @@ export default  function Home() {
               router={router} 
             />}
           </div>
+        </Suspense>
 
           <div className="p-2 rounded-b-lg border-t border-black bg-purple-300 "> 
             <button className="bg-red-300" type="button">devam et</button>
