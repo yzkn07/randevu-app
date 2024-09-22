@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getSubeler } from "./actions";
 import BosRandevuForm from "./components/BosRandevuForm";
 import SelectedInfos from "./components/SelectedInfos";
-
+import { Suspense } from "react";
 
 
 export default  function Home() {
@@ -50,11 +50,15 @@ export default  function Home() {
 
 
           <div className="p-2 bg-slate-100 rounded-t-lg">
-            {subeler && <BosRandevuForm  
-              subeler={subeler}
-              selectedSubeId={selectedSubeId}
-              setSelectedSubeId={setSelectedSubeId}
-            />}
+            {subeler && 
+            <Suspense>
+              <BosRandevuForm  
+                subeler={subeler}
+                selectedSubeId={selectedSubeId}
+                setSelectedSubeId={setSelectedSubeId}
+              />
+            </Suspense>
+            }
           </div>
 
 
