@@ -26,8 +26,8 @@ export default function BosRandevuForm({
 
   const handleSube = (id) => {
     setSelectedSubeId(id);
-    router.push(`?sube-id=${selectedSubeId}`);
-    
+    router.push(`?sube-id=${id}`);
+
   };
 
   if (!subeler || subeler.length === 0) {
