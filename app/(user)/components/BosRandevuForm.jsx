@@ -7,8 +7,6 @@ export default function BosRandevuForm({
   subeler,
   selectedSubeId,
   setSelectedSubeId,
-  searchParams,
-  router,
 }) {
     const searchParams = useSearchParams()
     const router = useRouter()
