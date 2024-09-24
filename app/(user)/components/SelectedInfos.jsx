@@ -1,6 +1,7 @@
 export default function SelectedInfos({ 
     selectedSube,
-    selectedBolum 
+    selectedBolum,
+    selectedDoktor
 }) {
 
     return (

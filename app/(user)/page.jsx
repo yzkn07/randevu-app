@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
-import { getBolumler, getSubeler } from "./actions";
+import { getBolumler, getDoktorlar, getSubeler } from "./actions";
 import BosRandevuForm from "./components/BosRandevuForm";
 import SelectedInfos from "./components/SelectedInfos";
 import { Suspense } from "react";
@@ -16,6 +16,8 @@ export default  function Home() {
   const [selectedSubeId, setSelectedSubeId] = useState(null)
   const [bolumler, setBolumler] = useState([]);  
   const [selectedBolumId, setSelectedBolumId] = useState(null);
+  const [doktorlar, setDoktorlar] = useState([])
+  const [selectedDoktorId, setSelectedDoktorId] = useState(null);
 
   useEffect(() => {
     async function fetchSubeler() {
@@ -36,10 +38,19 @@ export default  function Home() {
       
     }
     if(selectedBolumId){
+      const doktorlarData = await getDoktorlar(selectedSubeId, selectedBolumId)
+      setDoktorlar(doktorlarData.doktorlar)
+      console.log(doktorlar);
       setStep(2)
+      
+    }
+
+    if(selectedDoktorId){
+      alert("artık boş randevu slotlarını göstere bilirsin :)")
     }
   }
   const selectedBolum = selectedBolumId ? bolumler.find(bolum => bolum.id === selectedBolumId) : null;
+  const selectedDoktor = selectedDoktorId ? doktorlar.find(doktor => doktor.id === selectedDoktorId) : null;
 
   
   return (
@@ -72,6 +83,9 @@ export default  function Home() {
                 bolumler={bolumler}
                 selectedBolumId={selectedBolumId}
                 setSelectedBolumId={setSelectedBolumId}
+                doktorlar={doktorlar}
+                selectedDoktorId={selectedDoktorId}
+                setSelectedDoktorId={setSelectedDoktorId}
               />
             </Suspense>
             }
@@ -89,6 +103,7 @@ export default  function Home() {
                 <SelectedInfos 
                   selectedSube={selectedSube}
                   selectedBolum={selectedBolum}
+                  selectedDoktor={selectedDoktor}
                   />
               }
   

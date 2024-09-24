@@ -5,14 +5,12 @@ import { useEffect } from "react";
 
 export default function BosRandevuForm({
   subeler,
-  selectedSubeId,
-  setSelectedSubeId,
+  selectedSubeId,setSelectedSubeId,
   bolumler,
-  selectedBolumId,
-  setSelectedBolumId,
+  selectedBolumId,setSelectedBolumId,
   step,
-  setStep
-
+  doktorlar,
+  selectedDoktorId,setSelectedDoktorId
 }) {
     const  searchParams = useSearchParams()
     const router = useRouter()
@@ -38,8 +36,13 @@ export default function BosRandevuForm({
   const handleBolum = (bolumId) => {
     setSelectedBolumId(bolumId); 
     router.push(`?sube-id=${selectedSubeId}&bolum-id=${bolumId}`)
-    
-    
+
+  }
+
+  const handleDoktor = (doktorId) => {
+    setSelectedDoktorId(doktorId); 
+    router.push(`?sube-id=${selectedSubeId}&bolum-id=${selectedBolumId}&doktor-id=${doktorId}`)
+
   }
 
   return (
@@ -76,6 +79,22 @@ export default function BosRandevuForm({
                     ))}  
             </ul>
         )}
+
+         {step === 2 && (
+            <ul>
+            {doktorlar.map((doktor) => (
+                        <li
+                        key={doktor.id}  
+                        onClick={() => handleDoktor(doktor.id)}  
+                        className={`p-2 m-2 rounded-lg ${
+                            selectedDoktorId === doktor.id ? "bg-blue-500 text-white" : "bg-gray-200"
+                        } hover:cursor-pointer`}
+                        >
+                        {doktor.doktor_unvani} {doktor.doktor_adi} {doktor.doktor_soyadi} 
+                        </li>
+                    ))}  
+            </ul>
+         )}
 
 
     </div>

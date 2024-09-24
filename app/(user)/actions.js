@@ -46,5 +46,35 @@ export async function getBolumler(subeId) {
 
 return uniqueBolumler;
 
+}
+
+export async function getDoktorlar(subeId,bolumId) {
+    const supabase = createClient()
+    const {data : doktorlar, error} = await supabase
+        .from('doktorlar')
+        .select(`
+            id,
+            doktor_adi,
+            doktor_soyadi,
+            bolum_id,
+            sube_id,
+            doktor_unvani, 
+            bolumler (
+                    id,
+                    bolum_adi
+            ),
+            subeler (
+              id,
+              sube_adi
+            )
+          `)
+    .eq('sube_id', subeId)
+    .eq('bolum_id', bolumId)
+
+    if (error) {
+        console.log('Error fetching doktorlar:', error);
+    }
+
     
+    return { doktorlar }
 }
