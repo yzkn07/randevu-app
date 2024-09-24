@@ -39,7 +39,7 @@ export async function getBolumler(subeId) {
 
     }
 
-  // Hem bolum_adi hem de id'yi benzersiz hale getirelim, burayı araştır.
+  // Hem bolum_adi hem de id'yi uniq yap, burayı araştır.
   const uniqueBolumler = Array.from(new Map(
     bolumlerTablo.map(doktor => [doktor.bolumler.bolum_adi, doktor.bolumler])
 ).values());

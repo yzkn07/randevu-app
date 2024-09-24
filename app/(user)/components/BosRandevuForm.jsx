@@ -1,5 +1,6 @@
 "use client";
-import { useRouter, useSearchParams,  } from "next/navigation";
+// import { useRouter, useSearchParams,  } from "next/navigation";
+import { useSearchParams,  } from "next/navigation";
 import { useEffect } from "react";
 
 
@@ -10,38 +11,50 @@ export default function BosRandevuForm({
   selectedBolumId,setSelectedBolumId,
   step,
   doktorlar,
-  selectedDoktorId,setSelectedDoktorId
+  selectedDoktorId,setSelectedDoktorId,
+  buttonIsActive ,setButtonIsActive
 }) {
     const  searchParams = useSearchParams()
-    const router = useRouter()
+    // const router = useRouter()
     
   //url'de sube-id varsa ona göre sube id'yi set ediyor.
   useEffect(() => {
     const subeIdFromUrl = searchParams.get("sube-id");
+    const bolumIdFromUrl = searchParams.get("bolum-id");
+    const doktorIdFromUrl = searchParams.get("doktor-id");
     if (subeIdFromUrl) {
       setSelectedSubeId(parseInt(subeIdFromUrl));  
     }
-  }, [searchParams, setSelectedSubeId]);
+    if (bolumIdFromUrl) {
+      setSelectedBolumId(parseInt(bolumIdFromUrl));  
+    }
+    if (doktorIdFromUrl) {
+      setSelectedDoktorId(parseInt(doktorIdFromUrl));  
+    }
+    
+  }, [searchParams, setSelectedSubeId, setSelectedBolumId, setSelectedDoktorId]);
 
   const handleSube = (id) => {
     setSelectedSubeId(id);
-    router.push(`?sube-id=${id}`);
+    // router.push(`?sube-id=${id}`);
+    setButtonIsActive(true)
 
   };
 
   if (!subeler || subeler.length === 0) {
-    return <p>Şube yükleniyor...</p>;
+    return <p>Şubeler yükleniyor...</p>;
   }
 
   const handleBolum = (bolumId) => {
     setSelectedBolumId(bolumId); 
-    router.push(`?sube-id=${selectedSubeId}&bolum-id=${bolumId}`)
+    // router.push(`?sube-id=${selectedSubeId}&bolum-id=${bolumId}`)
+    
 
   }
 
   const handleDoktor = (doktorId) => {
     setSelectedDoktorId(doktorId); 
-    router.push(`?sube-id=${selectedSubeId}&bolum-id=${selectedBolumId}&doktor-id=${doktorId}`)
+    // router.push(`?sube-id=${selectedSubeId}&bolum-id=${selectedBolumId}&doktor-id=${doktorId}`)
 
   }
 

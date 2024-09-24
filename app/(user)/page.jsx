@@ -18,6 +18,7 @@ export default  function Home() {
   const [selectedBolumId, setSelectedBolumId] = useState(null);
   const [doktorlar, setDoktorlar] = useState([])
   const [selectedDoktorId, setSelectedDoktorId] = useState(null);
+  const [buttonIsActive, setButtonIsActive ] = useState(false)
 
   useEffect(() => {
     async function fetchSubeler() {
@@ -40,13 +41,23 @@ export default  function Home() {
     if(selectedBolumId && step === 1){
       const doktorlarData = await getDoktorlar(selectedSubeId, selectedBolumId)
       setDoktorlar(doktorlarData.doktorlar)
-      console.log(doktorlar);
       setStep(2)
       
     }
 
     if(selectedDoktorId){
       alert("artık boş randevu slotlarını göstere bilirsin :)")
+    }
+  }
+
+  const handleGeri = async() => {
+    if(step === 2 ){
+      setStep(1)
+      setSelectedDoktorId(null)
+      setSelectedBolumId(null)
+    }
+    if(step === 1 ){
+      setStep(0)
     }
   }
   const selectedBolum = selectedBolumId ? bolumler.find(bolum => bolum.id === selectedBolumId) : null;
@@ -86,14 +97,34 @@ export default  function Home() {
                 doktorlar={doktorlar}
                 selectedDoktorId={selectedDoktorId}
                 setSelectedDoktorId={setSelectedDoktorId}
+                buttonIsActive={buttonIsActive}
+                setButtonIsActive={setButtonIsActive}
               />
             </Suspense>
             }
           </div>
 
 
-          <div className="p-2 rounded-b-lg border-t border-black bg-purple-300 "> 
-            <button onClick={handleDevam} className="bg-red-300" type="button">devam et</button>
+          <div className="flex justify-between p-2 rounded-b-lg border-t border-black bg-purple-300 "> 
+            {step > 0  && (
+              <button onClick={handleGeri} className="bg-red-300" type="button">geri git</button>
+            )}
+            
+            <button
+  onClick={handleDevam}
+  disabled={!buttonIsActive}
+  className={`${
+    buttonIsActive 
+      ? 'bg-blue-500 hover:bg-blue-600 text-white shadow-lg' 
+      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+  } 
+  px-6 py-3 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none disabled:opacity-50`}
+  type="button"
+>
+  devam et
+</button>
+
+           
           </div>
 
         </div>
