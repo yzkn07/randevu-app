@@ -19,6 +19,14 @@ export default function SelectedInfos({
                     <p className="bg-slate-500 p-4 m-2 rounded-xl text-white">{selectedBolum.bolum_adi}</p>
                 </div>
             )}
+            {selectedDoktor && (
+                <div className="flex justify-start items-center">
+                    <p>Doktor:</p>
+                    <p className="bg-slate-500 p-4 m-2 rounded-xl text-white">
+                    {selectedDoktor.doktor_unvani} {selectedDoktor.doktor_adi} {selectedDoktor.doktor_soyadi} 
+                    </p>
+                </div>
+            )}
         </div>
     )
 }
