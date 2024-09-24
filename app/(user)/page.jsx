@@ -31,13 +31,13 @@ export default  function Home() {
   
   
   const handleDevam = async () => {
-    if(selectedSubeId){
+    if(selectedSubeId && step === 0){
       const bolumlerData = await getBolumler(selectedSubeId)
       setBolumler(bolumlerData);
       setStep(1)
       
     }
-    if(selectedBolumId){
+    if(selectedBolumId && step === 1){
       const doktorlarData = await getDoktorlar(selectedSubeId, selectedBolumId)
       setDoktorlar(doktorlarData.doktorlar)
       console.log(doktorlar);
