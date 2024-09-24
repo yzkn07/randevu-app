@@ -9,8 +9,9 @@ export default function BosRandevuForm({
   setSelectedSubeId,
   bolumler,
   selectedBolumId,
-  setSelectedBolumId
-
+  setSelectedBolumId,
+  step,
+  setStep
 
 }) {
     const  searchParams = useSearchParams()
@@ -37,40 +38,44 @@ export default function BosRandevuForm({
   const handleBolum = (bolumId) => {
     setSelectedBolumId(bolumId); 
     router.push(`?sube-id=${selectedSubeId}&bolum-id=${bolumId}`)
-
+    
     
   }
 
   return (
 
     <div className="bg-emerald-200 p-2 rounded-lg max-h-64 overflow-y-scroll">
-        <ul>
-        {subeler.map((e) => (
-            <li
-            key={e.id}  
-            onClick={() => handleSube(e.id)}
-            className={`m-2 p-4 rounded-lg hover:cursor-pointer active:bg-slate-700 active:text-white ${
-                selectedSubeId === e.id ? "bg-blue-500 text-white" : "bg-slate-100"
-            }`}
-            value={e.id}>
-                {e.sube_adi}
-            </li>
-        ))}
+        {step === 0 && (
+            <ul>
+            {subeler.map((e) => (
+                <li
+                key={e.id}  
+                onClick={() => handleSube(e.id)}
+                className={`m-2 p-4 rounded-lg hover:cursor-pointer active:bg-slate-700 active:text-white ${
+                    selectedSubeId === e.id ? "bg-blue-500 text-white" : "bg-slate-100"
+                }`}
+                value={e.id}>
+                    {e.sube_adi}
+                </li>
+            ))}
         </ul>
+        ) }
 
-        <ul>
-        {bolumler.map((bolum) => (
-                    <li
-                    key={bolum.id}  
-                    onClick={() => handleBolum(bolum.id)}  
-                    className={`p-2 m-2 rounded-lg ${
-                        selectedBolumId === bolum.id ? "bg-blue-500 text-white" : "bg-gray-200"
-                    } hover:cursor-pointer`}
-                    >
-                    {bolum.bolum_adi}
-                    </li>
-                ))}  
-        </ul>
+        {step === 1 && (
+            <ul>
+            {bolumler.map((bolum) => (
+                        <li
+                        key={bolum.id}  
+                        onClick={() => handleBolum(bolum.id)}  
+                        className={`p-2 m-2 rounded-lg ${
+                            selectedBolumId === bolum.id ? "bg-blue-500 text-white" : "bg-gray-200"
+                        } hover:cursor-pointer`}
+                        >
+                        {bolum.bolum_adi}
+                        </li>
+                    ))}  
+            </ul>
+        )}
 
 
     </div>

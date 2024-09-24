@@ -11,7 +11,7 @@ import { Suspense } from "react";
 export default  function Home() {
 
 
-
+  const [step, setStep] =useState(0) 
   const [subeler, setSubeler] = useState([])
   const [selectedSubeId, setSelectedSubeId] = useState(null)
   const [bolumler, setBolumler] = useState([]);  
@@ -32,7 +32,11 @@ export default  function Home() {
     if(selectedSubeId){
       const bolumlerData = await getBolumler(selectedSubeId)
       setBolumler(bolumlerData);
+      setStep(1)
       
+    }
+    if(selectedBolumId){
+      setStep(2)
     }
   }
   const selectedBolum = selectedBolumId ? bolumler.find(bolum => bolum.id === selectedBolumId) : null;
@@ -60,6 +64,8 @@ export default  function Home() {
             {subeler && 
             <Suspense>
               <BosRandevuForm  
+                step={step}
+                setStep={setStep}
                 subeler={subeler}
                 selectedSubeId={selectedSubeId}
                 setSelectedSubeId={setSelectedSubeId}
