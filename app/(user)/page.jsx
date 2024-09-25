@@ -104,7 +104,7 @@ export default  function Home() {
                           }
                         </div>
 
-
+ 
                               <div className={`h-16 w-full flex justify-between items-center relative p-2 rounded-b-lg border-t border-black bg-orange-400`}> 
                                   {step > 0 && (
                                     <button onClick={handleGeri} className="bg-red-300" type="button">geri git</button>
