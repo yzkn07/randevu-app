@@ -9,7 +9,7 @@ export default function BosRandevuForm({
   selectedSubeId,setSelectedSubeId,
   bolumler,
   selectedBolumId,setSelectedBolumId,
-  step,
+  step,setStep,
   doktorlar,
   selectedDoktorId,setSelectedDoktorId,
   buttonIsActive ,setButtonIsActive
@@ -38,7 +38,8 @@ export default function BosRandevuForm({
     setSelectedSubeId(id);
     // router.push(`?sube-id=${id}`);
     setButtonIsActive(true)
-
+    setStep(0)
+    
   };
 
   if (!subeler || subeler.length === 0) {
@@ -48,27 +49,29 @@ export default function BosRandevuForm({
   const handleBolum = (bolumId) => {
     setSelectedBolumId(bolumId); 
     // router.push(`?sube-id=${selectedSubeId}&bolum-id=${bolumId}`)
-    
+    setButtonIsActive(true)
 
   }
 
   const handleDoktor = (doktorId) => {
     setSelectedDoktorId(doktorId); 
     // router.push(`?sube-id=${selectedSubeId}&bolum-id=${selectedBolumId}&doktor-id=${doktorId}`)
-
+    setButtonIsActive(true)
   }
 
   return (
 
-    <div className="bg-emerald-200 p-2 rounded-lg max-h-64 overflow-y-scroll">
-        {step === 0 && (
+    <div style={{
+        boxShadow: "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
+      }} className="bg-white p-0 m-2 rounded-lg min-h-56 max-h-56 overflow-y-scroll">
+        {(step === null || step === 0) &&  (
             <ul>
             {subeler.map((e) => (
                 <li
                 key={e.id}  
                 onClick={() => handleSube(e.id)}
                 className={`m-2 p-4 rounded-lg hover:cursor-pointer active:bg-slate-700 active:text-white ${
-                    selectedSubeId === e.id ? "bg-blue-500 text-white" : "bg-slate-100"
+                    selectedSubeId === e.id ? "bg-blue-500 text-white " : "bg-slate-200  hover:bg-slate-400"
                 }`}
                 value={e.id}>
                     {e.sube_adi}
@@ -83,9 +86,9 @@ export default function BosRandevuForm({
                         <li
                         key={bolum.id}  
                         onClick={() => handleBolum(bolum.id)}  
-                        className={`p-2 m-2 rounded-lg ${
-                            selectedBolumId === bolum.id ? "bg-blue-500 text-white" : "bg-gray-200"
-                        } hover:cursor-pointer`}
+                        className={`p-4 m-2 rounded-lg ${
+                            selectedBolumId === bolum.id ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-400"
+                        } hover:cursor-pointer `}
                         >
                         {bolum.bolum_adi}
                         </li>
