@@ -63,7 +63,7 @@ export default function BosRandevuForm({
 
     <div style={{
         boxShadow: "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
-      }} className="bg-white p-0 m-2 rounded-lg min-h-56 max-h-56 overflow-y-scroll">
+      }} className="bg-white p-0 m-2 rounded-lg min-h-52 max-h-52 overflow-y-scroll">
         {(step === null || step === 0) &&  (
             <ul>
             {subeler.map((e) => (

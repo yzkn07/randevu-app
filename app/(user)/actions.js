@@ -78,3 +78,20 @@ export async function getDoktorlar(subeId,bolumId) {
     
     return { doktorlar }
 }
+
+export async function getRandevuSlotlari(doktorId){
+ const supabase = createClient()
+ const { data: randevu_slotlari, error } = await supabase
+    .from('randevu_slotlari')
+    .select(`
+        id,
+        doktor_id,
+        baslangic_zamani,
+        bitis_zamani,
+        musaitlik_durumu
+      `)
+    .eq('doktor_id', doktorId)
+    .eq('musaitlik_durumu', 'bos');
+
+    return { randevu_slotlari }
+}

@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
-import { getBolumler, getDoktorlar, getSubeler } from "./actions";
+import { getBolumler, getDoktorlar, getRandevuSlotlari, getSubeler } from "./actions";
 import BosRandevuForm from "./components/BosRandevuForm";
 import SelectedInfos from "./components/SelectedInfos";
 import { Suspense } from "react";
@@ -19,6 +19,7 @@ export default  function Home() {
   const [doktorlar, setDoktorlar] = useState([])
   const [selectedDoktorId, setSelectedDoktorId] = useState(null);
   const [buttonIsActive, setButtonIsActive ] = useState(false)
+  const [bosRandevular, setBosRandevular ] = useState([])
 
   useEffect(() => {
     async function fetchSubeler() {
@@ -47,7 +48,11 @@ export default  function Home() {
     }
 
     if(selectedDoktorId){
-      alert("artık boş randevu slotlarını göstere bilirsin :)")
+      const bosRandevularData = await getRandevuSlotlari(selectedDoktorId)
+      setBosRandevular(bosRandevularData.randevu_slotlari)
+      alert("bos randevu geliyo gibi :)")
+      
+      
     }
   }
 
