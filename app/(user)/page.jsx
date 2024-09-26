@@ -20,6 +20,14 @@ export default  function Home() {
   const [selectedDoktorId, setSelectedDoktorId] = useState(null);
   const [buttonIsActive, setButtonIsActive ] = useState(false)
   const [bosRandevular, setBosRandevular ] = useState([])
+  const [selectedRandevuId, setSelectedRandevuId] = useState(null)
+  const [formattedData, setFormattedData] = useState(null)
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+
+
 
   useEffect(() => {
     async function fetchSubeler() {
@@ -48,10 +56,51 @@ export default  function Home() {
     }
 
     if(selectedDoktorId){
+      const formatRandevuZamani = (baslangic_zamani, bitis_zamani) => {
+        const baslangicDate = new Date(baslangic_zamani);
+        const bitisDate = new Date(bitis_zamani);
+    
+        // Başlangıç zamanı: Hem tarih hem de saat
+        const formattedBaslangic = baslangicDate.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            hour12: true,
+        });
+    
+        // Bitiş zamanı: Sadece saat
+        const formattedBitis = bitisDate.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            hour12: true,
+        });
+    
+        return `Randevu Zamanı: ${formattedBaslangic} - ${formattedBitis}`;
+    };
+
       const bosRandevularData = await getRandevuSlotlari(selectedDoktorId)
       setBosRandevular(bosRandevularData.randevu_slotlari)
-      alert("bos randevu geliyo gibi :)")
       
+
+     const newFormattedData = bosRandevular.map(randevu => ({
+        id: randevu.id,
+        baslangic_zamani: randevu.baslangic_zamani,
+        bitis_zamani: randevu.bitis_zamani,
+        randevu_zamani: formatRandevuZamani(randevu.baslangic_zamani, randevu.bitis_zamani),
+        musaitlik_durumu: randevu.musaitlik_durumu,
+        // hasta: `${randevu.hastalar.hasta_adi} ${randevu.hastalar.hasta_soyadi}`,
+        doktor: `${randevu.doktorlar.doktor_adi} ${randevu.doktorlar.doktor_soyadi}`,
+        bolum: randevu.doktorlar.bolumler.bolum_adi,
+        sube: randevu.doktorlar.subeler.sube_adi 
+      }))
+      setFormattedData(newFormattedData)
+      
+      setStep(3)
+      setIsModalOpen(true)
       
     }
   }
@@ -73,6 +122,7 @@ export default  function Home() {
   }
   const selectedBolum = selectedBolumId ? bolumler.find(bolum => bolum.id === selectedBolumId) : null;
   const selectedDoktor = selectedDoktorId ? doktorlar.find(doktor => doktor.id === selectedDoktorId) : null;
+  const selectedRandevu = selectedRandevuId ? bosRandevular.find(randevu => randevu.id === selectedRandevuId) : null;
 
   
   return (
@@ -108,6 +158,10 @@ export default  function Home() {
                   setSelectedDoktorId={setSelectedDoktorId}
                   buttonIsActive={buttonIsActive}
                   setButtonIsActive={setButtonIsActive}
+                  bosRandevular={bosRandevular}
+                  setBosRandevular={setBosRandevular}
+                  selectedRandevuId={selectedRandevuId}
+                  setSelectedRandevuId={setSelectedRandevuId}
                 />
               </Suspense>
               }
@@ -153,6 +207,10 @@ export default  function Home() {
                 selectedSube={selectedSube}
                 selectedBolum={selectedBolum}
                 selectedDoktor={selectedDoktor}
+                selectedRandevu={selectedRandevu}
+                formattedData={formattedData}
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
                 />
             }
       </div>

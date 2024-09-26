@@ -12,7 +12,10 @@ export default function BosRandevuForm({
   step,setStep,
   doktorlar,
   selectedDoktorId,setSelectedDoktorId,
-  buttonIsActive ,setButtonIsActive
+  buttonIsActive ,setButtonIsActive,
+  bosRandevular, setBosRandevular,
+  selectedRandevuId,setSelectedRandevuId
+
 }) {
     const  searchParams = useSearchParams()
     // const router = useRouter()
@@ -58,6 +61,15 @@ export default function BosRandevuForm({
     // router.push(`?sube-id=${selectedSubeId}&bolum-id=${selectedBolumId}&doktor-id=${doktorId}`)
     setButtonIsActive(true)
   }
+
+  const handleRandevu = (randevuId) => {
+    setSelectedRandevuId(randevuId); 
+    // router.push(`?sube-id=${selectedSubeId}&bolum-id=${selectedBolumId}&doktor-id=${doktorId}`)
+    setButtonIsActive(true)
+    
+  }
+
+  
 
   return (
 
@@ -107,6 +119,22 @@ export default function BosRandevuForm({
                         } hover:cursor-pointer`}
                         >
                         {doktor.doktor_unvani} {doktor.doktor_adi} {doktor.doktor_soyadi} 
+                        </li>
+                    ))}  
+            </ul>
+         )}
+
+         {step === 3 && (
+            <ul>
+            {bosRandevular.map((randevu) => (
+                        <li
+                        key={randevu.id}  
+                        onClick={() => handleRandevu(randevu.id)}  
+                        className={`p-2 m-2 rounded-lg ${
+                            selectedRandevuId === randevu.id ? "bg-blue-500 text-white" : "bg-gray-200"
+                        } hover:cursor-pointer`}
+                        >
+                        {randevu.baslangic_zamani}
                         </li>
                     ))}  
             </ul>

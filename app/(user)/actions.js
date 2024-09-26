@@ -85,10 +85,22 @@ export async function getRandevuSlotlari(doktorId){
     .from('randevu_slotlari')
     .select(`
         id,
-        doktor_id,
         baslangic_zamani,
         bitis_zamani,
-        musaitlik_durumu
+        musaitlik_durumu,
+        hasta_id, 
+        hastalar (
+                id,
+                hasta_adi,
+                hasta_soyadi
+        ),
+        doktorlar (
+          id,
+          doktor_adi,
+          doktor_soyadi,
+          bolumler (bolum_adi),
+          subeler (sube_adi)
+        )
       `)
     .eq('doktor_id', doktorId)
     .eq('musaitlik_durumu', 'bos');
