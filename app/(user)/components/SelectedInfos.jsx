@@ -44,7 +44,7 @@ export default function SelectedInfos({
 
 
             {isModalOpen && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 shadow-2xl">
     <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-lg">
       <button
         onClick={() => setIsModalOpen(false)}
@@ -61,7 +61,7 @@ export default function SelectedInfos({
           <p><span className="font-semibold">Randevu Zamanı:</span> {e.randevu_zamani}</p>
         </div>
       ))}
-      <Link href={"/login"}><button className="bg-blue-400 p-2 w-full rounded-xl hover:bg-blue-500 hover:text-white hover:shadow-xl">RANDEVU ALMAK İÇİN <br/> <span className="font-semibold text-lg">GİRİŞ YAP</span> </button></Link>
+      <Link href={"/login"}><button className="bg-blue-400 p-2 w-full rounded-xl hover:bg-blue-500 hover:text-white shadow-xl font-semibold text-lg">RANDEVU ALMAK İÇİN <br/> GİRİŞ YAP </button></Link>
     </div>
   </div>
 )}

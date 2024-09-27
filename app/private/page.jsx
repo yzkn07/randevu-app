@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server'
 import SignOutButton from '@/components/SignOutButton'
 import Image from 'next/image'
 import GetRandevu from './action'
+import { formatRandevuData } from '@/utils/functions/functions'
 
 export default async function PrivatePage() {
   const supabase = createClient()
@@ -15,56 +16,9 @@ export default async function PrivatePage() {
     redirect('/login')
   }
 
-  const formatRandevuZamani = (baslangic_zamani, bitis_zamani) => {
-    const baslangicDate = new Date(baslangic_zamani);
-    const bitisDate = new Date(bitis_zamani);
-
-    // Başlangıç zamanı: Hem tarih hem de saat
-    const formattedBaslangic = baslangicDate.toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: true,
-    });
-
-    // Bitiş zamanı: Sadece saat
-    const formattedBitis = bitisDate.toLocaleTimeString('en-US', {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: true,
-    });
-
-    return `Randevu Zamanı: ${formattedBaslangic} - ${formattedBitis}`;
-};
-
-
   const randevu_slotlari = await GetRandevu() || [];
+  const formattedRandevuSlotlari = formatRandevuData(randevu_slotlari);
 
-  const formattedData = randevu_slotlari.map(randevu => ({
-    id: randevu.id,
-    baslangic_zamani: randevu.baslangic_zamani,
-    bitis_zamani: randevu.bitis_zamani,
-    randevu_zamani: formatRandevuZamani(randevu.baslangic_zamani, randevu.bitis_zamani),
-    musaitlik_durumu: randevu.musaitlik_durumu,
-    hasta: `${randevu.hastalar.hasta_adi} ${randevu.hastalar.hasta_soyadi}`,
-    doktor: `${randevu.doktorlar.doktor_adi} ${randevu.doktorlar.doktor_soyadi}`,
-    bolum: randevu.doktorlar.bolumler.bolum_adi,
-    sube: randevu.doktorlar.subeler.sube_adi 
-  }))
-
-  
-  
-  
-  
-
-  // console.log(data.user);
-  
-
-  
   return (
     <div>
         {/* <Image src={data.user.user_metadata.avatar_url} width={100} height={100} alt='user' priority/> */}
@@ -76,7 +30,7 @@ export default async function PrivatePage() {
       <div>
         <h2>randevularınız</h2>
         <ul>
-          {formattedData.length > 0 ? (formattedData.map(e => (
+          {formattedRandevuSlotlari.length > 0 ? (formattedRandevuSlotlari.map(e => (
             <li key={e.id}>
               <p>Hasta: {e.hasta}</p>
               <p>Şube: {e.sube}</p>

@@ -6,6 +6,7 @@ import { getBolumler, getDoktorlar, getRandevuSlotlari, getSubeler } from "./act
 import BosRandevuForm from "./components/BosRandevuForm";
 import SelectedInfos from "./components/SelectedInfos";
 import { Suspense } from "react";
+import {getSelectedItem, formatRandevuData} from "@/utils/functions/functions";
 
 
 export default  function Home() {
@@ -37,7 +38,8 @@ export default  function Home() {
     }
     fetchSubeler()
   },[])
-  const selectedSube = selectedSubeId ? subeler.find(sube => sube.id === selectedSubeId) : null;
+  // const selectedSube = selectedSubeId ? subeler.find(sube => sube.id === selectedSubeId) : null;
+  const selectedSube = getSelectedItem(subeler,selectedSubeId)
   
   
   const handleDevam = async () => {
@@ -56,48 +58,10 @@ export default  function Home() {
     }
 
     if(selectedDoktorId){
-      const formatRandevuZamani = (baslangic_zamani, bitis_zamani) => {
-        const baslangicDate = new Date(baslangic_zamani);
-        const bitisDate = new Date(bitis_zamani);
-    
-        // Başlangıç zamanı: Hem tarih hem de saat
-        const formattedBaslangic = baslangicDate.toLocaleString('en-US', {
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-            hour12: true,
-        });
-    
-        // Bitiş zamanı: Sadece saat
-        const formattedBitis = bitisDate.toLocaleTimeString('en-US', {
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-            hour12: true,
-        });
-    
-        return `Randevu Zamanı: ${formattedBaslangic} - ${formattedBitis}`;
-    };
-
       const bosRandevularData = await getRandevuSlotlari(selectedDoktorId)
       setBosRandevular(bosRandevularData.randevu_slotlari)
-      
-
-     const newFormattedData = bosRandevular.map(randevu => ({
-        id: randevu.id,
-        baslangic_zamani: randevu.baslangic_zamani,
-        bitis_zamani: randevu.bitis_zamani,
-        randevu_zamani: formatRandevuZamani(randevu.baslangic_zamani, randevu.bitis_zamani),
-        musaitlik_durumu: randevu.musaitlik_durumu,
-        // hasta: `${randevu.hastalar.hasta_adi} ${randevu.hastalar.hasta_soyadi}`,
-        doktor: `${randevu.doktorlar.doktor_adi} ${randevu.doktorlar.doktor_soyadi}`,
-        bolum: randevu.doktorlar.bolumler.bolum_adi,
-        sube: randevu.doktorlar.subeler.sube_adi 
-      }))
-      setFormattedData(newFormattedData)
+      const formattedBosRandevular = formatRandevuData(bosRandevular);
+      setFormattedData(formattedBosRandevular)
       setStep(3)
       setButtonIsActive(false)
     }
@@ -129,10 +93,10 @@ export default  function Home() {
     }
 
   }
-  const selectedBolum = selectedBolumId ? bolumler.find(bolum => bolum.id === selectedBolumId) : null;
-  const selectedDoktor = selectedDoktorId ? doktorlar.find(doktor => doktor.id === selectedDoktorId) : null;
-  const selectedRandevu = selectedRandevuId ? bosRandevular.find(randevu => randevu.id === selectedRandevuId) : null;
 
+  const selectedBolum = getSelectedItem(bolumler,selectedBolumId)
+  const selectedDoktor = getSelectedItem(doktorlar,selectedDoktorId)
+  const selectedRandevu = getSelectedItem(bosRandevular,selectedRandevuId)
   
   return (
   <>
