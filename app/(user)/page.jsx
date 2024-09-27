@@ -98,10 +98,12 @@ export default  function Home() {
         sube: randevu.doktorlar.subeler.sube_adi 
       }))
       setFormattedData(newFormattedData)
-      
       setStep(3)
+      setButtonIsActive(false)
+    }
+    if(selectedRandevuId){
+      setStep(4)
       setIsModalOpen(true)
-      
     }
   }
 
@@ -119,6 +121,13 @@ export default  function Home() {
       setStep(null)
       setButtonIsActive(false)
     }
+    if(step === 3 ){
+      setSelectedRandevuId(null)
+      setSelectedDoktorId(null)
+      setStep(2)
+      setButtonIsActive(false)
+    }
+
   }
   const selectedBolum = selectedBolumId ? bolumler.find(bolum => bolum.id === selectedBolumId) : null;
   const selectedDoktor = selectedDoktorId ? doktorlar.find(doktor => doktor.id === selectedDoktorId) : null;

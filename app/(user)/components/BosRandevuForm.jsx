@@ -66,7 +66,7 @@ export default function BosRandevuForm({
     setSelectedRandevuId(randevuId); 
     // router.push(`?sube-id=${selectedSubeId}&bolum-id=${selectedBolumId}&doktor-id=${doktorId}`)
     setButtonIsActive(true)
-    
+
   }
 
   
@@ -139,8 +139,7 @@ export default function BosRandevuForm({
                     ))}  
             </ul>
          )}
-
-
+         
     </div>
 
   );

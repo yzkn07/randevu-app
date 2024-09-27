@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export default function SelectedInfos({ 
     selectedSube,
     selectedBolum,
@@ -39,9 +41,17 @@ export default function SelectedInfos({
                     </p>
                 </div>
             )}
-            {isModalOpen && formattedData && (
+
+
+            {isModalOpen && (
   <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-    <div className="bg-white p-6 rounded-lg shadow-lg w-1/2 max-w-lg">
+    <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-lg">
+      <button
+        onClick={() => setIsModalOpen(false)}
+        className="ms-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 float-end"
+      >
+        Kapat
+      </button>
       <h1 className="text-lg font-bold mb-4">Alınabilecek Uygun Boş Randevu Bilgileri</h1>
       {formattedData.map((e) => (
         <div key={e.id} className="mb-4">
@@ -51,12 +61,7 @@ export default function SelectedInfos({
           <p><span className="font-semibold">Randevu Zamanı:</span> {e.randevu_zamani}</p>
         </div>
       ))}
-      <button
-        onClick={() => setIsModalOpen(false)}
-        className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-      >
-        Kapat
-      </button>
+      <Link href={"/login"}><button className="bg-blue-400 p-2 w-full rounded-xl hover:bg-blue-500 hover:text-white hover:shadow-xl">RANDEVU ALMAK İÇİN <br/> <span className="font-semibold text-lg">GİRİŞ YAP</span> </button></Link>
     </div>
   </div>
 )}
