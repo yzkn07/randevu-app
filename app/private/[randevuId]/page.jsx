@@ -10,14 +10,14 @@ export default function Randevu({ params }) {
         async function fetchRandevu(){
           const randevuData = await randevuyuGoruntule(randevuId); 
           setRandevu(randevuData.randevu_slotlari)
-          console.log(randevu);
+
 
     }
     fetchRandevu();
 }, [randevuId]);  
 
 const formattedRandevu =  formatRandevuData(randevu)
-console.log(formattedRandevu);
+
 
     
     
