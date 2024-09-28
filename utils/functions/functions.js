@@ -27,7 +27,7 @@ export  function formatRandevuZamani(baslangic_zamani, bitis_zamani){
             hour12: true,
         });
     
-        return `Randevu Zamanı: ${formattedBaslangic} - ${formattedBitis}`
+        return `${formattedBaslangic} - ${formattedBitis}`
 }
 
 export function formatRandevuData(randevuList) {

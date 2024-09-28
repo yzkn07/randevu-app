@@ -107,3 +107,14 @@ export async function getRandevuSlotlari(doktorId){
 
     return { randevu_slotlari }
 }
+
+export async function getUser() {
+    const supabase = createClient()
+
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    const userId = userData.user?.id;
+    console.log(userId,"userId");
+    
+    return { userId }
+ 
+}

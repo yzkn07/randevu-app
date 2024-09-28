@@ -1,9 +1,13 @@
+"use client"
+import { useSearchParams } from 'next/navigation';
 import { login, signup, signInWithGithub } from './actions'
 
 export default function LoginPage({ searchParams }) {
+    
     const { error } = searchParams;
-    
-    
+    const searchParamss = useSearchParams()
+    const randevuId = searchParamss.get("randevu-id");
+
   return (
     <>
     {error && (
@@ -16,6 +20,7 @@ export default function LoginPage({ searchParams }) {
     <form className='mt-4 mx-auto flex flex-col w-80 gap-4 text-black'>
       {/* <label className=' bg-gray-600 text-white w-fit  px-2 rounded' htmlFor="name">Ad Soyad:</label>
       <input className='border border-black p-2 rounded-lg' id="name" name="name" type="text" required /> */}
+      <input className='border border-black p-2 rounded-lg' id="randevuId" name="randevuId" defaultValue={randevuId} type="text" hidden/>
       <label className=' bg-gray-600 text-white w-fit  px-2 rounded' htmlFor="email">Email:</label>
       <input className='border border-black p-2 rounded-lg' id="email" name="email" type="email" required />
       <label className='bg-gray-600 text-white w-fit px-2 rounded' htmlFor="password">Password:</label>

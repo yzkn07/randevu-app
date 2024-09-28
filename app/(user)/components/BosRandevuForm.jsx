@@ -74,16 +74,16 @@ export default function BosRandevuForm({
   return (
 
     <div style={{
-        boxShadow: "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
-      }} className="bg-white p-0 m-2 rounded-lg min-h-52 max-h-52 overflow-y-scroll">
+        boxShadow: "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset"
+      }} className="bg-white p-0 m-0 rounded-t-lg min-h-52 max-h-52 overflow-y-scroll">
         {(step === null || step === 0) &&  (
             <ul>
             {subeler.map((e) => (
                 <li
                 key={e.id}  
                 onClick={() => handleSube(e.id)}
-                className={`m-2 p-4 rounded-lg hover:cursor-pointer active:bg-slate-700 active:text-white ${
-                    selectedSubeId === e.id ? "bg-blue-500 text-white " : "bg-slate-200  hover:bg-slate-400"
+                className={`shadow-md m-2 p-4 rounded-lg hover:cursor-pointer active:bg-slate-700 active:text-white ${
+                    selectedSubeId === e.id ? "bg-blue-500 text-white " : "bg-slate-50 hover:bg-slate-400"
                 }`}
                 value={e.id}>
                     {e.sube_adi}
@@ -98,8 +98,8 @@ export default function BosRandevuForm({
                         <li
                         key={bolum.id}  
                         onClick={() => handleBolum(bolum.id)}  
-                        className={`p-4 m-2 rounded-lg ${
-                            selectedBolumId === bolum.id ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-400"
+                        className={`shadow-md p-4 m-2 rounded-lg ${
+                            selectedBolumId === bolum.id ? "bg-blue-500 text-white" : "bg-slate-50 hover:bg-gray-400"
                         } hover:cursor-pointer `}
                         >
                         {bolum.bolum_adi}
@@ -114,8 +114,8 @@ export default function BosRandevuForm({
                         <li
                         key={doktor.id}  
                         onClick={() => handleDoktor(doktor.id)}  
-                        className={`p-2 m-2 rounded-lg ${
-                            selectedDoktorId === doktor.id ? "bg-blue-500 text-white" : "bg-gray-200"
+                        className={`shadow-md p-2 m-2 rounded-lg ${
+                            selectedDoktorId === doktor.id ? "bg-blue-500 text-white" : "bg-slate-50 hover:bg-gray-400"
                         } hover:cursor-pointer`}
                         >
                         {doktor.doktor_unvani} {doktor.doktor_adi} {doktor.doktor_soyadi} 
@@ -139,7 +139,7 @@ export default function BosRandevuForm({
                     ))}  
             </ul>
          )}
-         
+
     </div>
 
   );

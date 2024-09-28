@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
-import { getBolumler, getDoktorlar, getRandevuSlotlari, getSubeler } from "./actions";
+import { getBolumler, getDoktorlar, getRandevuSlotlari, getSubeler, getUser } from "./actions";
 import BosRandevuForm from "./components/BosRandevuForm";
 import SelectedInfos from "./components/SelectedInfos";
 import { Suspense } from "react";
@@ -25,10 +25,9 @@ export default  function Home() {
   const [formattedData, setFormattedData] = useState(null)
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-
-
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [yonlendirme, setYonlendirme] = useState("")
+  const [userId, setUserId] = useState(null)
 
   useEffect(() => {
     async function fetchSubeler() {
@@ -65,11 +64,34 @@ export default  function Home() {
       setStep(3)
       setButtonIsActive(false)
     }
+
     if(selectedRandevuId){
+      if (!isAuthenticated) {
+        setYonlendirme("Randevu Almak İçin Giriş Yap");
+
+      } else {
+        setYonlendirme("Randevu Al");
+
+      }
       setStep(4)
       setIsModalOpen(true)
     }
   }
+
+  useEffect(() => {
+    async function fetchUser(){
+      const userIdData = await getUser()
+      console.log(userIdData.userId, "userIdData");
+      if(userIdData?.userId){
+        setUserId(userIdData)
+        setIsAuthenticated(true)
+      } else {
+        setUserId(null)
+        setIsAuthenticated(false)
+      }
+    }
+    fetchUser()
+  },[])
 
   const handleGeri = async() => {
     if(step === 2 ){
@@ -97,15 +119,17 @@ export default  function Home() {
   const selectedBolum = getSelectedItem(bolumler,selectedBolumId)
   const selectedDoktor = getSelectedItem(doktorlar,selectedDoktorId)
   const selectedRandevu = getSelectedItem(bosRandevular,selectedRandevuId)
+
+  
   
   return (
   <>
     <div className="flex justify-between items-center p-2">
-      <h1 className="bg-blue-400 p-2 rounded-lg">MALİPOL</h1>
-      <Link className="bg-lime-200 p-2 rounded-lg active:bg-black active:text-white " href={"/login"}>giriş yap</Link>
+      <h1 className="border border-blue-400 p-2 rounded-lg">MALİPOL HASTANELERİ</h1>
+      <Link className="border border-black p-2 rounded-lg active:bg-black active:text-white " href={"/login"}>giriş yap</Link>
     </div>
     <div className="flex flex-col  p-2 border border-black bg-slate-200 text-black m-2 rounded-lg ">
-          <div className="border-b border-black p-2 bg-lime-200 rounded-t-lg  text-start">
+          <div className="border-b border-black p-2 bg-white rounded-t-lg  text-start">
             <p className="font-light text-xl">hızlı randevu al</p>
           </div>
       
@@ -114,7 +138,7 @@ export default  function Home() {
               <p className="font-semibold text-lg text-blue-600">şube seçin</p>
             </div>
 
-            <div className="p-2 bg-slate-100 rounded-t-lg  border-b border-black">
+            <div className="p-0 shadow-inner bg-slate-100 rounded-t-lg  border-b border-black">
               {subeler && 
               <Suspense>
                 <BosRandevuForm  
@@ -143,7 +167,7 @@ export default  function Home() {
             <div className={`${
                 step !== null ? "h-16 max-h-screen opacity-100" : "h-2 opacity-0"
               } 
-  w-full flex justify-between items-center relative p-2 rounded-b-lg  bg-slate-400
+  w-full flex justify-between items-center relative p-2 rounded-b-lg  bg-blue-200 shadow-xl
   transition-all duration-500 ease-in-out overflow-hidden`} 
             > 
   {step > 0 && (
@@ -184,6 +208,12 @@ export default  function Home() {
                 formattedData={formattedData}
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
+                isAuthenticated={isAuthenticated}
+                setIsAuthenticated={setIsAuthenticated}
+                selectedRandevuId={selectedRandevuId}
+                setSelectedRandevuId={setSelectedRandevuId}
+                yonlendirme={yonlendirme}
+                setYonlendirme={setYonlendirme}
                 />
             }
       </div>

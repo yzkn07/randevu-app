@@ -1,4 +1,4 @@
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function SelectedInfos({ 
     selectedSube,
@@ -7,8 +7,28 @@ export default function SelectedInfos({
     selectedRandevu,
     formattedData,
     isModalOpen,
-    setIsModalOpen
+    setIsModalOpen,
+    isAuthenticated,
+    setIsAuthenticated,
+    selectedRandevuId,
+    setSelectedRandevuId,
+    yonlendirme,
+    setYonlendirme,
 }) {
+    const router = useRouter()
+
+
+    const handleRandevu = (randevuId) => {
+        if(!isAuthenticated){
+            setSelectedRandevuId(randevuId);
+            router.push(`/login/?randevu-id=${randevuId}`)
+
+        } else {
+            setSelectedRandevuId(randevuId);
+            router.push(`/private/${randevuId}`)
+        }
+    }
+
 
     return (
         <div className="p-4 bg-slate-300 -mt-2 rounded-xl outline outline-slate-200  -outline-offset-8">    
@@ -61,7 +81,8 @@ export default function SelectedInfos({
           <p><span className="font-semibold">Randevu Zamanı:</span> {e.randevu_zamani}</p>
         </div>
       ))}
-      <Link href={"/login"}><button className="bg-blue-400 p-2 w-full rounded-xl hover:bg-blue-500 hover:text-white shadow-xl font-semibold text-lg">RANDEVU ALMAK İÇİN <br/> GİRİŞ YAP </button></Link>
+
+      <button onClick={() => handleRandevu(selectedRandevuId)}  className="bg-blue-400 p-2 w-full rounded-xl hover:bg-blue-500 hover:text-white shadow-xl font-semibold text-lg">{yonlendirme}</button>
     </div>
   </div>
 )}

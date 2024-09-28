@@ -44,7 +44,7 @@ export default async function GetRandevu(){
       }
 
     // console.log(userId);  
-    console.log(randevu_slotlari);
+    // console.log(randevu_slotlari);
 
       return randevu_slotlari;
     

@@ -1,5 +1,4 @@
-'use server'
-
+"use server"
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
@@ -10,6 +9,8 @@ export async function login(formData) {
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
+  const randevuId = formData.get('randevuId')
+
   const data = {
     email: formData.get('email'),
     password: formData.get('password'),
@@ -22,7 +23,7 @@ export async function login(formData) {
   }
 
   revalidatePath('/', 'layout')
-  redirect('/private')
+  redirect(`/private/${randevuId}`)
 }
 
 export async function signup(formData) {
