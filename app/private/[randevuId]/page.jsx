@@ -2,8 +2,11 @@
 import { useEffect, useState } from "react"
 import { randevuyuGoruntule } from "./action"
 import { formatRandevuData } from "@/utils/functions/functions";
+import { useRouter } from "next/navigation";
 
 export default function Randevu({ params }) {
+    const router = useRouter()
+
     const { randevuId } = params || ""
     const [randevu, setRandevu] = useState([])
     useEffect(() => {
@@ -18,8 +21,9 @@ export default function Randevu({ params }) {
 
 const formattedRandevu =  formatRandevuData(randevu)
 
-
-    
+const handleAra = () => {
+    router.push("/")
+}
     
     return(
         <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg space-y-6">
@@ -32,8 +36,14 @@ const formattedRandevu =  formatRandevuData(randevu)
                 <p className="text-md font-medium text-green-600">Bölüm: {e.bolum}</p>
                 <p className="text-md font-medium text-indigo-600">Doktor: {e.doktor}</p>
                 <p className="text-sm text-gray-700">Randevu Zamanı: {e.randevu_zamani}</p>
+
+                <div className="flex justify-between items-center mt-2">
+                    <button onClick={() => handleAra()} className="bg-slate-400 text-white p-2 rounded-lg hover:bg-slate-500 active:bg-slate-700 active:text-white">randevu ara</button>
+                    <button className="bg-blue-400 p-2 text-white rounded-lg active:bg-black hover:bg-blue-600 active:text-white">randevu oluştur</button>
+                </div>
             </li>
         ))}
+        
     </ul>
 </div>
 

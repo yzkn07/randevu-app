@@ -1,5 +1,4 @@
 "use client"
-import Link from "next/link";
 
 import { useEffect, useState } from "react";
 import { getBolumler, getDoktorlar, getRandevuSlotlari, getSubeler, getUser } from "./actions";
@@ -7,10 +6,12 @@ import BosRandevuForm from "./components/BosRandevuForm";
 import SelectedInfos from "./components/SelectedInfos";
 import { Suspense } from "react";
 import {getSelectedItem, formatRandevuData} from "@/utils/functions/functions";
+import { useRouter } from "next/navigation";
+import SignOutButton from "@/components/SignOutButton";
 
 
 export default  function Home() {
-
+  const router = useRouter()
 
   const [step, setStep] =useState(null) 
   const [subeler, setSubeler] = useState([])
@@ -25,7 +26,7 @@ export default  function Home() {
   const [formattedData, setFormattedData] = useState(null)
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(null)
   const [yonlendirme, setYonlendirme] = useState("")
   const [userId, setUserId] = useState(null)
 
@@ -73,7 +74,6 @@ export default  function Home() {
         setYonlendirme("Randevu Al");
 
       }
-      setStep(4)
       setIsModalOpen(true)
     }
   }
@@ -113,20 +113,29 @@ export default  function Home() {
       setStep(2)
       setButtonIsActive(false)
     }
-
   }
 
   const selectedBolum = getSelectedItem(bolumler,selectedBolumId)
   const selectedDoktor = getSelectedItem(doktorlar,selectedDoktorId)
   const selectedRandevu = getSelectedItem(bosRandevular,selectedRandevuId)
 
-  
+ const handleGiris = () => {
+  router.push("/login")
+ }
   
   return (
   <>
     <div className="flex justify-between items-center p-2">
       <h1 className="border border-blue-400 p-2 rounded-lg">MALİPOL HASTANELERİ</h1>
-      <Link className="border border-black p-2 rounded-lg active:bg-black active:text-white " href={"/login"}>giriş yap</Link>
+      
+      {isAuthenticated ? (<SignOutButton/>) : (
+        <button 
+          onClick={handleGiris}
+          className="border border-black p-2 rounded-lg active:bg-black active:text-white ">
+          Giriş yap
+        </button>
+      )}
+        
     </div>
     <div className="flex flex-col  p-2 border border-black bg-slate-200 text-black m-2 rounded-lg ">
           <div className="border-b border-black p-2 bg-white rounded-t-lg  text-start">

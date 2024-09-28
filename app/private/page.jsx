@@ -4,6 +4,7 @@ import SignOutButton from '@/components/SignOutButton'
 import Image from 'next/image'
 import GetRandevu from './action'
 import { formatRandevuData } from '@/utils/functions/functions'
+import Link from 'next/link'
 
 export default async function PrivatePage() {
   const supabase = createClient()
@@ -27,6 +28,10 @@ export default async function PrivatePage() {
         <SignOutButton /> 
       </span>
 
+      <div className='m-2'> 
+        <Link href={"/"} className='bg-blue-300 p-2 border border-blue-200 shadow-md  active:bg-blue-500 active:text-white  rounded-lg'>Randevu Ara</Link>
+      </div>
+
       <div>
         <h2>randevularınız</h2>
         <ul>
@@ -43,6 +48,7 @@ export default async function PrivatePage() {
           )}
         </ul>
       </div>
+
     </div>
   )
 }
