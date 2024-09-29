@@ -31,3 +31,22 @@ export async function randevuyuGoruntule(randevuId) {
     return { randevu_slotlari }
     
 }
+
+export async function SaveRandevu(randevuId, userId) {
+    const supabase = createClient();
+
+    const { data: randevu_slotlari, error } = await supabase
+        .from('randevu_slotlari')
+        .update({ 
+            musaitlik_durumu: 'dolu',
+            hasta_id: userId 
+        })
+        .eq('id', randevuId);
+
+    if (error) {
+        console.error('Randevu güncellenirken hata oluştu:', error);
+        return { error };
+    }
+
+    return { randevu_slotlari };
+}
