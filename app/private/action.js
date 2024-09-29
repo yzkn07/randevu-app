@@ -1,3 +1,4 @@
+"use server"
 import { createClient } from "@/utils/supabase/server";
 
 export default async function GetRandevu(){
@@ -47,6 +48,20 @@ export default async function GetRandevu(){
     // console.log(randevu_slotlari);
 
       return randevu_slotlari;
-    
-        
+}
+
+export async function CancelRandevu(randevuId) {
+  const supabase = createClient();
+  
+  const { data: updatedRandevu, error } = await supabase
+    .from('randevu_slotlari')
+    .update({ musaitlik_durumu: 'bos', hasta_id: null })
+    .eq('id', randevuId);
+
+  if (error) {
+    console.error("Randevu iptal edilirken hata oluştu:", error);
+    return { error };
+  }
+
+  return updatedRandevu;
 }
