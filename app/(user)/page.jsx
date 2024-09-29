@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import {getSelectedItem, formatRandevuData} from "@/utils/functions/functions";
 import { useRouter } from "next/navigation";
 import SignOutButton from "@/components/SignOutButton";
+import Link from "next/link";
 
 
 export default  function Home() {
@@ -127,16 +128,20 @@ export default  function Home() {
   <>
     <div className="flex justify-between items-center p-2">
       <h1 className="border border-blue-400 p-2 rounded-lg">MALİPOL HASTANELERİ</h1>
-      
       {isAuthenticated ? (<SignOutButton/>) : (
         <button 
-          onClick={handleGiris}
-          className="border border-black p-2 rounded-lg active:bg-black active:text-white ">
+        onClick={handleGiris}
+        className="border border-black p-2 rounded-lg active:bg-black active:text-white ">
           Giriş yap
         </button>
       )}
         
     </div>
+      {isAuthenticated  && (
+        <div className="border w-fit border-blue-400 text-black bg-white active:bg-blue-600 p-2 rounded-lg m-2">
+          <Link href={"/private"}>Randevularım</Link>
+        </div>
+      )}
     <div className="flex flex-col  p-2 border border-black bg-slate-200 text-black m-2 rounded-lg ">
           <div className="border-b border-black p-2 bg-white rounded-t-lg  text-start">
             <p className="font-light text-xl">hızlı randevu al</p>
