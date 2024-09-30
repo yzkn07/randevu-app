@@ -2,6 +2,8 @@
 // import { useRouter, useSearchParams,  } from "next/navigation";
 import { useSearchParams,  } from "next/navigation";
 import { useEffect } from "react";
+import RandevuKartlari from "./RandevuKartlari";
+import { formatRandevuData } from "@/utils/functions/functions";
 
 
 export default function BosRandevuForm({
@@ -14,7 +16,8 @@ export default function BosRandevuForm({
   selectedDoktorId,setSelectedDoktorId,
   buttonIsActive ,setButtonIsActive,
   bosRandevular, setBosRandevular,
-  selectedRandevuId,setSelectedRandevuId
+  selectedRandevuId,setSelectedRandevuId,
+  formattedData,setFormattedData
 
 }) {
     const  searchParams = useSearchParams()
@@ -36,6 +39,7 @@ export default function BosRandevuForm({
     }
     
   }, [searchParams, setSelectedSubeId, setSelectedBolumId, setSelectedDoktorId]);
+
 
   const handleSube = (id) => {
     setSelectedSubeId(id);
@@ -69,8 +73,9 @@ export default function BosRandevuForm({
 
   }
 
+  // const formattedBosRandevular = formatRandevuData(bosRandevular)
+  // console.log(formattedBosRandevular);
   
-
   return (
 
     <div style={{
@@ -125,19 +130,7 @@ export default function BosRandevuForm({
          )}
 
          {step === 3 && (
-            <ul>
-            {bosRandevular.map((randevu) => (
-                        <li
-                        key={randevu.id}  
-                        onClick={() => handleRandevu(randevu.id)}  
-                        className={`p-2 m-2 rounded-lg ${
-                            selectedRandevuId === randevu.id ? "bg-blue-500 text-white" : "bg-gray-200"
-                        } hover:cursor-pointer`}
-                        >
-                        {randevu.baslangic_zamani}
-                        </li>
-                    ))}  
-            </ul>
+            <RandevuKartlari bosRandevular={formattedData} handleRandevu={handleRandevu}/>
          )}
 
     </div>

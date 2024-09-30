@@ -13,6 +13,7 @@ export default function PrivatePage() {
   const [refresh, setRefresh] = useState(false); // Randevuları yenilemek için state
   const [formattedRandevuSlotlari, setFormattedRandevuSlotlari] = useState([]);
   const [userEmail, setUserEmail] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     async function fetchUserData() {
@@ -36,13 +37,22 @@ export default function PrivatePage() {
 
   // Randevuyu iptal etme fonksiyonu
   const handleIptal = async (randevuId) => {
-    
-    const result = await CancelRandevu(randevuId);
+    let iptalOnay = false
+    alert("randevu iptal edilsin mi?",iptalOnay = true)
+    if(iptalOnay){
+      const result = await CancelRandevu(randevuId);
     if (!result?.error) {
       // Başarılı olursa randevuları yenilemek için refresh state'ini değiştir
-      setRefresh(!refresh);
+      setIsModalOpen(true)
+      setTimeout(() => {
+        setIsModalOpen(false)
+      }, 1800);
+      setTimeout(() => {
+        setRefresh(!refresh);
+      }, 1500);
     } else {
       console.error('Randevu iptal edilemedi:', result.error);
+    }
     }
   };
 
@@ -94,6 +104,13 @@ export default function PrivatePage() {
           )}
         </ul>
       </div>
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 shadow-2xl transition-opacity duration-1800 ease-out animate-fade-in">
+          <div className="flex justify-center items-center bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-lg transform transition-transform duration-1800 ease-out animate-bounce-in">
+            <h1 className="text-3xl font-bold m-0 text-center text-red-500">Randevu iptal edildi</h1>
+          </div>
+      </div>
+   )}
     </div>
   );
 }

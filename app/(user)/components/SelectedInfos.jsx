@@ -29,6 +29,7 @@ export default function SelectedInfos({
         }
     }
 
+    const selectedRandevuModal = formattedData?.find((e) => e.id === selectedRandevuId);
 
     return (
         <div className="p-4 bg-slate-300 -mt-2 rounded-xl outline outline-slate-200  -outline-offset-8">    
@@ -73,14 +74,14 @@ export default function SelectedInfos({
         Kapat
       </button>
       <h1 className="text-lg font-bold mb-4">Alınabilecek Uygun Boş Randevu Bilgileri</h1>
-      {formattedData.map((e) => (
-        <div key={e.id} className="mb-4">
-          <p><span className="font-semibold">Şube:</span> {e.sube}</p>
-          <p><span className="font-semibold">Bölüm:</span> {e.bolum}</p>
-          <p><span className="font-semibold">Doktor:</span> {e.doktor}</p>
-          <p><span className="font-semibold">Randevu Zamanı:</span> {e.randevu_zamani}</p>
-        </div>
-      ))}
+        {selectedRandevuModal && (
+            <div key={selectedRandevuModal.id} className="mb-4">
+                <p><span className="font-semibold">Şube:</span> {selectedRandevuModal.sube}</p>
+                <p><span className="font-semibold">Bölüm:</span> {selectedRandevuModal.bolum}</p>
+                <p><span className="font-semibold">Doktor:</span> {selectedRandevuModal.doktor}</p>
+                <p><span className="font-semibold">Randevu Zamanı:</span> {selectedRandevuModal.randevu_zamani}</p>
+            </div>
+        )}
 
       <button onClick={() => handleRandevu(selectedRandevuId)}  className="bg-blue-400 p-2 w-full rounded-xl hover:bg-blue-500 hover:text-white shadow-xl font-semibold text-lg">{yonlendirme}</button>
     </div>
