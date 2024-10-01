@@ -19,6 +19,7 @@ export default function LoginPage() {
 
   return (
     <Suspense>
+    <>
       {error && (
         <div>
           <p className="bg-red-500 text-black font-semibold p-2 m-2 w-fit rounded-lg mx-auto">
@@ -185,6 +186,7 @@ export default function LoginPage() {
           Github ile Giriş Yap
         </button>
       </form> */}
-      </Suspense>
+  </>
+  </Suspense>
   );
 }
