@@ -5,10 +5,10 @@ import { login, signup, signInWithGithub } from './actions';
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
-  const searchParams = useSearchParams();
-  const randevuId = searchParams.get('randevu-id');
-  const loginDurumu = searchParams.get('isLogin');
-  const error = searchParams.get('error');
+  const searchParamss = useSearchParams();
+  const randevuId = searchParamss.get('randevu-id');
+  const loginDurumu = searchParamss.get('isLogin');
+  const error = searchParamss.get('error');
 
   useEffect(()=>{
     if (!isLogin) {
