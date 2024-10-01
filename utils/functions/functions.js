@@ -16,7 +16,7 @@ export  function formatRandevuZamani(baslangic_zamani, bitis_zamani){
             hour: 'numeric',
             minute: 'numeric',
             second: 'numeric',
-            hour12: true,
+            hour12: false,
         });
     
         // Bitiş zamanı: Sadece saat
@@ -24,7 +24,7 @@ export  function formatRandevuZamani(baslangic_zamani, bitis_zamani){
             hour: 'numeric',
             minute: 'numeric',
             second: 'numeric',
-            hour12: true,
+            hour12: false,
         });
     
         return `${formattedBaslangic} - ${formattedBitis}`
