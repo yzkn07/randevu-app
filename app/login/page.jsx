@@ -2,13 +2,14 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { login, signup, signInWithGithub } from './actions';
+import { Suspense } from 'react'
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
-  const searchParamss = useSearchParams();
-  const randevuId = searchParamss.get('randevu-id');
-  const loginDurumu = searchParamss.get('isLogin');
-  const error = searchParamss.get('error');
+  const searchParams = useSearchParams();
+  const randevuId = searchParams.get('randevu-id');
+  const loginDurumu = searchParams.get('isLogin');
+  const error = searchParams.get('error');
 
   useEffect(()=>{
     if (!isLogin) {
@@ -18,6 +19,7 @@ export default function LoginPage() {
 
   return (
     <>
+    <Suspense>
       {error && (
         <div>
           <p className="bg-red-500 text-black font-semibold p-2 m-2 w-fit rounded-lg mx-auto">
@@ -184,6 +186,7 @@ export default function LoginPage() {
           Github ile Giriş Yap
         </button>
       </form> */}
+      </Suspense>
     </>
   );
 }
