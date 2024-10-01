@@ -18,7 +18,6 @@ export default function LoginPage() {
   },[loginDurumu])
 
   return (
-    <>
     <Suspense>
       {error && (
         <div>
@@ -187,6 +186,5 @@ export default function LoginPage() {
         </button>
       </form> */}
       </Suspense>
-    </>
   );
 }
