@@ -1,50 +1,77 @@
 "use server"
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-
 import { createClient } from '@/utils/supabase/server'
 
 export async function login(formData) {
   const supabase = createClient()
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const randevuId = formData.get('randevuId')
+  const randevuId = formData.get('randevuId') || null
 
   const data = {
     email: formData.get('email'),
     password: formData.get('password'),
   }
 
-  const { error } = await supabase.auth.signInWithPassword(data)
+  // Giriş yapmaya çalış
+  const { error, data: loginData } = await supabase.auth.signInWithPassword(data)
 
   if (error) {
+    console.error('Login error:', error); // Hatanın sebebini görmek için
     redirect('/login?error=gecersiz-giris')
   }
 
+  // Giriş başarılıysa randevu sayfasına yönlendir
   revalidatePath('/', 'layout')
-  redirect(`/private/${randevuId}`)
+
+  // randevuId varsa /private/${randevuId}'a, yoksa /private'a yönlendir
+  if (randevuId) {
+    redirect(`/private/${randevuId}`)
+  } else {
+    redirect('/private')
+  }
 }
+
+
 
 export async function signup(formData) {
   const supabase = createClient()
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
-  const data = {
-    email: formData.get('email'),
-    password: formData.get('password'),
+  const email = formData.get('email')
+  const password = formData.get('password')
+  const firstName = formData.get('firstName')
+  const lastName = formData.get('lastName')
+
+  // kullanıcı kaydı
+  const { data: userData, error: userError } = await supabase.auth.signUp({
+    email,
+    password,
+  })
+
+  if (userError) {
+    redirect('/login?error=gecersiz-giris')
   }
 
-  const { error } = await supabase.auth.signUp(data)
+  // Eğer kullanıcı kaydolursa, hastalar tablosuna hasta bilgilerini ekle
+  const userId = userData.user.id
 
-  if (error) {
-    redirect('/login?error=gecersiz-giris')
+  const { error: hastaError } = await supabase
+    .from('hastalar')
+    .insert([
+      { id: userId, hasta_adi: firstName, hasta_soyadi: lastName }
+    ])
+
+  if (hastaError) {
+    console.log('Hastalar tablosuna kayıt eklenirken hata:', hastaError)
+    // Eğer hata varsa buradaki hatayı yakalayabilirsin ve belki kullanıcıya bir hata mesajı gösterebilirsin
   }
 
   revalidatePath('/', 'layout')
   redirect('/login')
 }
+
 
 export async function signInWithGithub() {
   const supabase = createClient()

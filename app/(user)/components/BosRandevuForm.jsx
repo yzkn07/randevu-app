@@ -24,21 +24,21 @@ export default function BosRandevuForm({
     // const router = useRouter()
     
   //url'de sube-id varsa ona göre sube id'yi set ediyor.
-  useEffect(() => {
-    const subeIdFromUrl = searchParams.get("sube-id");
-    const bolumIdFromUrl = searchParams.get("bolum-id");
-    const doktorIdFromUrl = searchParams.get("doktor-id");
-    if (subeIdFromUrl) {
-      setSelectedSubeId(parseInt(subeIdFromUrl));  
-    }
-    if (bolumIdFromUrl) {
-      setSelectedBolumId(parseInt(bolumIdFromUrl));  
-    }
-    if (doktorIdFromUrl) {
-      setSelectedDoktorId(parseInt(doktorIdFromUrl));  
-    }
+  // useEffect(() => {
+  //   const subeIdFromUrl = searchParams.get("sube-id");
+  //   const bolumIdFromUrl = searchParams.get("bolum-id");
+  //   const doktorIdFromUrl = searchParams.get("doktor-id");
+  //   if (subeIdFromUrl) {
+  //     setSelectedSubeId(parseInt(subeIdFromUrl));  
+  //   }
+  //   if (bolumIdFromUrl) {
+  //     setSelectedBolumId(parseInt(bolumIdFromUrl));  
+  //   }
+  //   if (doktorIdFromUrl) {
+  //     setSelectedDoktorId(parseInt(doktorIdFromUrl));  
+  //   }
     
-  }, [searchParams, setSelectedSubeId, setSelectedBolumId, setSelectedDoktorId]);
+  // }, [searchParams, setSelectedSubeId, setSelectedBolumId, setSelectedDoktorId]);
 
 
   const handleSube = (id) => {

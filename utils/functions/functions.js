@@ -31,7 +31,7 @@ export  function formatRandevuZamani(baslangic_zamani, bitis_zamani){
 }
 
 export function formatRandevuData(randevuList) {
-  return randevuList.map((randevu) => ({
+  return randevuList?.map((randevu) => ({
     id: randevu.id,
     baslangic_zamani: randevu.baslangic_zamani,
     bitis_zamani: randevu.bitis_zamani,

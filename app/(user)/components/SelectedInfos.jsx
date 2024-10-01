@@ -63,7 +63,7 @@ export default function SelectedInfos({
                 </div>
             )}
 
-
+{/* bir randevu slotu seçilince o randevunun özet bilgisi ekrana gelir */}
             {isModalOpen && (
   <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 shadow-2xl">
     <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-lg">
@@ -73,7 +73,7 @@ export default function SelectedInfos({
       >
         Kapat
       </button>
-      <h1 className="text-lg font-bold mb-4">Alınabilecek Uygun Boş Randevu Bilgileri</h1>
+      <h1 className="text-lg font-bold mb-4">Randevu Bilgileri</h1>
         {selectedRandevuModal && (
             <div key={selectedRandevuModal.id} className="mb-4">
                 <p><span className="font-semibold">Şube:</span> {selectedRandevuModal.sube}</p>

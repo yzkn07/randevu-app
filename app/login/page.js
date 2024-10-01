@@ -18,13 +18,20 @@ export default function LoginPage({ searchParams }) {
         </div>
         )}
     <form className='mt-4 mx-auto flex flex-col w-80 gap-4 text-black'>
-      {/* <label className=' bg-gray-600 text-white w-fit  px-2 rounded' htmlFor="name">Ad Soyad:</label>
-      <input className='border border-black p-2 rounded-lg' id="name" name="name" type="text" required /> */}
+      <label className=' bg-gray-600 text-white w-fit  px-2 rounded' htmlFor="firstName">Ad:</label>
+      <input className='border border-black p-2 rounded-lg' id="firstName" name="firstName" type="text" required />
+
+      <label className=' bg-gray-600 text-white w-fit  px-2 rounded' htmlFor="lastName">Soyad:</label>
+      <input className='border border-black p-2 rounded-lg' id="lastName" name="lastName" type="text" required />
+  
       <input className='border border-black p-2 rounded-lg' id="randevuId" name="randevuId" defaultValue={randevuId} type="text" hidden/>
+
       <label className=' bg-gray-600 text-white w-fit  px-2 rounded' htmlFor="email">Email:</label>
       <input className='border border-black p-2 rounded-lg' id="email" name="email" type="email" required />
+
       <label className='bg-gray-600 text-white w-fit px-2 rounded' htmlFor="password">Password:</label>
       <input className='border border-black p-2 rounded-lg' id="password" name="password" type="password" required />
+
       <button className='mx-auto border border-black w-20 rounded' formAction={login}>Log in</button>
       <button className='mx-auto border border-black w-20 rounded' formAction={signup}>Sign up</button>
     </form>

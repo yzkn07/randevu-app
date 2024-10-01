@@ -75,6 +75,7 @@ export default function Home() {
     }
   }, [bosRandevular]);
 
+  // devam et butonunun işlevleri
   const handleDevam = async () => {
     if (selectedSubeId && step === 0) {
       const bolumlerData = await getBolumler(selectedSubeId);
@@ -101,6 +102,7 @@ export default function Home() {
     }
   };
 
+// geri git butonunun işlevleri
   const handleGeri = () => {
     if (step === 2) {
       setStep(1);
@@ -144,20 +146,23 @@ export default function Home() {
           </button>
         )}
       </div>
+
       {isAuthenticated && (
         <div className="border w-fit border-blue-400 text-black bg-white active:bg-blue-600 p-2 rounded-lg m-2">
           <Link href={"/private"}>Randevularım</Link>
         </div>
       )}
+      
+{/* hızlı randevu modülü */}
       <div className="flex flex-col p-2 border border-black bg-slate-200 text-black m-2 rounded-lg">
         <div className="border-b border-black p-2 bg-white rounded-t-lg text-start">
           <p className="font-light text-xl">hızlı randevu al</p>
         </div>
 
         <div className="p-2 bg-slate-300 rounded-b-lg">
-          <div className="p-2">
+          {/* <div className="p-2">
             <p className="font-semibold text-lg text-blue-600">şube seçin</p>
-          </div>
+          </div> */}
 
           <div className="p-0 shadow-inner bg-slate-100 rounded-t-lg border-b border-black">
             {subeler && (
@@ -187,6 +192,7 @@ export default function Home() {
             )}
           </div>
 
+            {/* geri git ve davam et butonlarının ui kısmı */}
           <div
             className={`${
               step !== null ? "h-16 max-h-screen opacity-100" : "h-2 opacity-0"
@@ -216,6 +222,7 @@ export default function Home() {
             </button>
           </div>
         </div>
+        
         {/* seçilen bilgileri gösterme */}
         {selectedSube && (
           <SelectedInfos

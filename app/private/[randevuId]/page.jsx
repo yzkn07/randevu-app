@@ -60,7 +60,7 @@ const handleRandevuAl =  () => {
             <h1 className="text-2xl font-bold text-gray-800 border-b pb-4">Seçilen Randevu</h1>
 
 <ul className="space-y-4">
-    {formattedRandevu.map((e) => (
+    {formattedRandevu ? (formattedRandevu.map((e) => (
         <li key={e.id} className="bg-gray-100 p-4 rounded-lg shadow-md hover:bg-gray-200 transition duration-300">
             <p className="text-lg font-semibold text-blue-600">Şube: {e.sube}</p>
             <p className="text-md font-medium text-green-600">Bölüm: {e.bolum}</p>
@@ -76,7 +76,9 @@ const handleRandevuAl =  () => {
                 </button>
          </div>
         </li>
-    ))}
+    ))): (
+        <p>seçili randevu yok</p>
+    )}
 </ul>
 
 
