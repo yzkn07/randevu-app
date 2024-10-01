@@ -1,9 +1,9 @@
 "use client"
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { login, signup, signInWithGithub } from './actions';
 
-export default function LoginPage() {
+export  function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const searchParams = useSearchParams();
   const randevuId = searchParams.get('randevu-id');
@@ -171,4 +171,11 @@ export default function LoginPage() {
       </form> */}
     </>
   );
+}
+export default function Login() {
+  return(
+    <Suspense>
+      <LoginPage/>
+    </Suspense>
+  )
 }
