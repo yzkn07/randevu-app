@@ -1,7 +1,8 @@
 "use client"
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { login, signup, signInWithGithub } from './actions';
+import { login, signup, signInWithGithub, getCinsiyetTypes } from './actions';
+import RandevuAraButton from '@/components/RandevuAraButton';
 
 export  function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -9,6 +10,8 @@ export  function LoginPage() {
   const randevuId = searchParams.get('randevu-id');
   const loginDurumu = searchParams.get('isLogin');
   const error = searchParams.get('error');
+  const [cinsiyetListesi, setCinsiyetListesi] = useState([]);
+  const [selectedCinsiyet, setSelectedCinsiyet] = useState('');
 
   useEffect(() => {
     if (!isLogin) {
@@ -16,6 +19,18 @@ export  function LoginPage() {
     }
   }, [loginDurumu]);
 
+  useEffect(() => {
+    async function GetCinsiyetTipleri() {
+      const cinsiyetTipleri = await getCinsiyetTypes()      
+      if (error) {
+        console.error('Error fetching cinsiyet:', error);
+      } else {
+        setCinsiyetListesi(cinsiyetTipleri.hastaCinsiyetiTipleri);
+      }
+    }
+    GetCinsiyetTipleri()
+  },[])
+  
   return (
     <>
       {error && (
@@ -122,6 +137,23 @@ export  function LoginPage() {
               type="text"
               required
             />
+             {/* Cinsiyet seçimi */}
+              <label htmlFor="cinsiyet">Cinsiyet:</label>
+              <select
+                id="cinsiyet"
+                name="cinsiyet"
+                value={selectedCinsiyet}
+                onChange={(e) => setSelectedCinsiyet(e.target.value)}
+                required
+                className="border border-black p-2 rounded-lg"
+              >
+                <option value="">Seçiniz</option>
+                {cinsiyetListesi.map((item) => (
+                  <option key={item.value} value={item.value}>
+                    {item.value}
+                  </option>
+                ))}
+              </select>
             <label
               className="bg-gray-600 text-white w-fit px-2 rounded"
               htmlFor="email"
@@ -174,8 +206,11 @@ export  function LoginPage() {
 }
 export default function Login() {
   return(
+    <>
+    <RandevuAraButton/>
     <Suspense>
       <LoginPage/>
     </Suspense>
+    </>
   )
 }

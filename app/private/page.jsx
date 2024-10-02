@@ -7,6 +7,7 @@ import GetRandevu, { CancelRandevu } from './action';
 import { formatRandevuData } from '@/utils/functions/functions';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import RandevuAraButton from '@/components/RandevuAraButton';
 
 export default function PrivatePage() {
   const supabase = createClient();
@@ -69,14 +70,7 @@ export default function PrivatePage() {
       </div>
 
       {/* Randevu Ara Butonu */}
-      <div className="mb-6">
-        <Link
-          href={"/"}
-          className="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
-        >
-          Randevu Ara
-        </Link>
-      </div>
+      <RandevuAraButton/>
 
       {/* Randevular */}
       <div>

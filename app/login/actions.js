@@ -45,6 +45,8 @@ export async function signup(formData) {
   const firstName = formData.get('firstName')
   const lastName = formData.get('lastName')
   const randevuId = formData.get('randevuId')
+  const cinsiyet = formData.get('cinsiyet')
+
 
   // kullanıcı kaydı
   const { data: userData, error: userError } = await supabase.auth.signUp({
@@ -62,7 +64,7 @@ export async function signup(formData) {
   const { error: hastaError } = await supabase
     .from('hastalar')
     .insert([
-      { id: userId, hasta_adi: firstName, hasta_soyadi: lastName }
+      { id: userId, hasta_adi: firstName, hasta_soyadi: lastName, hasta_cinsiyeti: cinsiyet }
     ])
 
   if (hastaError) {
@@ -76,7 +78,7 @@ export async function signup(formData) {
   // Eğer randevuId varsa, login formuna randevuId parametresiyle birlikte yönlendir
   redirect(`/login?randevu-id=${randevuId}&isLogin=true`);
 } else {
-  redirect('/login');
+  redirect('/login?isLogin=true');
 }
 }
 
@@ -93,3 +95,9 @@ export async function signup(formData) {
 //     redirect(data.url) // use the redirect API for your server framework
 //   }
 // }
+
+export async function getCinsiyetTypes() {
+  const supabase = createClient()
+  const { data: hastaCinsiyetiTipleri, error} = await supabase.rpc('get_cinsiyet_enum')
+  return { hastaCinsiyetiTipleri }
+}
