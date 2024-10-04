@@ -3,10 +3,11 @@ import SignOutButton from "@/components/SignOutButton";
 
 import { useEffect, useState } from "react";
 import { getPolRandevulari, randevuEkle } from "./actions";
+import { useRouter } from "next/navigation";
 
 
 export default function Doktor() {
-
+    const router = useRouter()
     const [polRandevulari, setPolRandevulari] = useState([])
 
     function handleHasta() {
