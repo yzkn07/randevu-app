@@ -1,12 +1,12 @@
 "use client"
 import SignOutButton from "@/components/SignOutButton";
-import { useRouter } from "next/navigation";
+
 import { useEffect, useState } from "react";
 import { getPolRandevulari, randevuEkle } from "./actions";
 import { formatRandevuData } from "@/utils/functions/functions";
 
 export default function doktor() {
-    const router = useRouter()
+
     const [polRandevulari, setPolRandevulari] = useState([])
     const [format, setFormat] = useState([])
     function handleHasta() {
