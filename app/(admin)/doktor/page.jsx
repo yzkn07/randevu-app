@@ -40,7 +40,7 @@ export default function Doktor() {
                 <button  className="mt-2 bg-white p-4 rounded-3xl font-semibold text-xl">randevu ekle</button>
             </form>
 
-            <div className="flex flex-col justify-center items-center m-6 p-4 bg-white shadow-md rounded-lg">
+            <div className="flex flex-col justify-center items-center m-6 p-4 bg-blue-100 shadow-md rounded-lg">
             <h1 className="text-center text-3xl font-bold my-4 text-blue-600">Hasta Randevuları</h1>
                 <ul className="space-y-4 w-full max-w-2xl">
                     {polRandevulari.map(e => (
