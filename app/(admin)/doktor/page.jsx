@@ -3,12 +3,12 @@ import SignOutButton from "@/components/SignOutButton";
 
 import { useEffect, useState } from "react";
 import { getPolRandevulari, randevuEkle } from "./actions";
-import { formatRandevuData } from "@/utils/functions/functions";
 
-export default function doktor() {
+
+export default function Doktor() {
 
     const [polRandevulari, setPolRandevulari] = useState([])
-    const [format, setFormat] = useState([])
+
     function handleHasta() {
         return (
             router.push("/private")
