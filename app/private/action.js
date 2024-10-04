@@ -1,7 +1,7 @@
 "use server"
 import { createClient } from "@/utils/supabase/server";
 
-export default async function GetRandevu(){
+export default  async function GetRandevu(){
 
     const supabase = createClient()
 
@@ -44,7 +44,7 @@ export default async function GetRandevu(){
       
       }
 
-    // console.log(userId);  
+    
     // console.log(randevu_slotlari);
 
       return randevu_slotlari;
@@ -64,4 +64,18 @@ export async function CancelRandevu(randevuId) {
   }
 
   return updatedRandevu;
+}
+
+export async function hastaData() {
+  const supabase = createClient()
+
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    const userId = userData.user.id;
+
+    const { data: hastaData , error } = await supabase
+    .from('hastalar')
+    .select('*')
+    .eq('id', userId)
+
+    return { hastaData }
 }

@@ -35,6 +35,7 @@ export async function updateSession(request) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  
   if (
     !user &&
     !request.nextUrl.pathname.startsWith('/login') &&
@@ -47,6 +48,24 @@ export async function updateSession(request) {
     return NextResponse.redirect(url)
   }
 
+   // Kullanıcı varsa ve doktor rotasına gidiliyorsa doktor kontrolü yap
+   if (user && request.nextUrl.pathname.startsWith('/doktor')) {
+    // Hastalar tablosundan kullanıcının doktor olup olmadığını kontrol et
+    const { data: hastaData, error } = await supabase
+      .from('hastalar')
+      .select('isDoktor')
+      .eq('id', user.id)
+      .single()
+
+    // Eğer kullanıcı doktor değilse private'a yönlendir
+    if (!hastaData?.isDoktor) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/private' // Yetkisiz erişim için bir sayfa
+      return NextResponse.redirect(url)
+    }
+  }
+
+  
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
   // creating a new response object with NextResponse.next() make sure to:
   // 1. Pass the request in it, like so:

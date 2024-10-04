@@ -14,5 +14,5 @@ export default function SignOutButton() {
     }
   }
 
-  return <button className='bg-red-600 text-white p-2 m-2 rounded-lg' onClick={handleSignOut}>Çıkış Yap</button>
+  return <button className='bg-white text-red-500 font-medium p-2 rounded-lg border border-red-500 active:bg-red-500 active:text-white' onClick={handleSignOut}>Çıkış Yap</button>
 }

@@ -1,20 +1,23 @@
 "use client"
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 
 import SignOutButton from '@/components/SignOutButton';
-import GetRandevu, { CancelRandevu } from './action';
+import GetRandevu, { CancelRandevu, hastaData } from './action';
 import { formatRandevuData } from '@/utils/functions/functions';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import RandevuAraButton from '@/components/RandevuAraButton';
 
 export default function PrivatePage() {
+  const router = useRouter()
+
   const supabase = createClient();
   const [refresh, setRefresh] = useState(false); // Randevuları yenilemek için state
   const [formattedRandevuSlotlari, setFormattedRandevuSlotlari] = useState([]);
   const [userEmail, setUserEmail] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isDoktor, setIsDoktor] = useState(false)
 
   useEffect(() => {
     async function fetchUserData() {
@@ -27,7 +30,6 @@ export default function PrivatePage() {
       } else {
         setUserEmail(data.user.email);
       }
-
       const randevu_slotlari = await GetRandevu() || [];
       const formattedData = formatRandevuData(randevu_slotlari);
       setFormattedRandevuSlotlari(formattedData);
@@ -35,6 +37,25 @@ export default function PrivatePage() {
     
     fetchUserData();
   }, [refresh]); // Refresh state değiştikçe verileri yeniden getir
+
+
+  // giriş yapan hastanın doktor rolü var mı?
+  useEffect(()=>{
+    async function GetHastaDoktorMu() {
+      const data = await hastaData()
+      const doktorMu = data.hastaData[0]?.isDoktor;
+      setIsDoktor(doktorMu)
+    }
+    GetHastaDoktorMu()
+  },[])
+
+  const handleDoktor = () => {
+    if(isDoktor){
+      router.push("/doktor")
+    }
+  }
+
+
 
   // Randevuyu iptal etme fonksiyonu
   const handleIptal = async (randevuId) => {
@@ -63,14 +84,21 @@ export default function PrivatePage() {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-xl font-bold text-gray-800">
-            Hoşgeldiniz, <span className="text-blue-600">{userEmail}</span>
+            Sağlıklı günler <br />
+            <span className="text-blue-600 text-xs">{userEmail}</span>
           </h1>
         </div>
         <SignOutButton />
       </div>
 
-      {/* Randevu Ara Butonu */}
-      <RandevuAraButton/>
+     <div className='flex gap-2 justify-between items-center'>
+       {/* Randevu Ara Butonu */}
+       <RandevuAraButton/>
+       {/* kullanıcı doktorsa doktor panelini açabilir */}
+       {isDoktor ?  (
+          <button onClick={() => handleDoktor()} className='p-2 bg-white border border-black rounded-lg active:bg-black active:text-white'>doktor paneli</button>
+        ): (<></>)}
+     </div>
 
       {/* Randevular */}
       <div>

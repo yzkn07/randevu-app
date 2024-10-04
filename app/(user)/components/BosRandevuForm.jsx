@@ -130,8 +130,14 @@ export default function BosRandevuForm({
          )}
 
          {step === 3 && (
-            <RandevuKartlari bosRandevular={formattedData} handleRandevu={handleRandevu}/>
-         )}
+            bosRandevular.length > 0 ? (
+              <RandevuKartlari bosRandevular={formattedData} handleRandevu={handleRandevu}/>
+            )
+          : (
+          <div className="flex justify-center items-center min-h-52">
+            <p className="rounded-xl border border-red-500 text-red-500 p-4 font-semibold">boş randevu bulunamadı</p>
+          </div>
+         ))}
 
     </div>
 
