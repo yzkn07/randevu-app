@@ -5,7 +5,7 @@ export default function SelectedInfos({
     selectedBolum,
     selectedDoktor,
     selectedRandevu,
-    formattedData,
+    bosRandevular,
     isModalOpen,
     setIsModalOpen,
     isAuthenticated,
@@ -29,7 +29,7 @@ export default function SelectedInfos({
         }
     }
 
-    const selectedRandevuModal = formattedData?.find((e) => e.id === selectedRandevuId);
+    const selectedRandevuModal = bosRandevular?.find((e) => e.id === selectedRandevuId);
 
     return (
         <div className="p-4 bg-slate-300 -mt-2 rounded-xl outline outline-slate-200  -outline-offset-8">    

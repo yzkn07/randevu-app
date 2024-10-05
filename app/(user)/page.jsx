@@ -68,12 +68,12 @@ export default function Home() {
   }, [step, selectedDoktorId]);
 
   // boş randevular getirilince, formatlanır.
-  useEffect(() => {
-    if (bosRandevular.length > 0) {
-      const formattedBosRandevular = formatRandevuData(bosRandevular);
-      setFormattedData(formattedBosRandevular);
-    }
-  }, [bosRandevular]);
+  // useEffect(() => {
+  //   if (bosRandevular.length > 0) {
+  //     const formattedBosRandevular = formatRandevuData(bosRandevular);
+  //     setBosRandevular(formattedBosRandevular)
+  //   }
+  // }, [bosRandevular]);
 
   // devam et butonunun işlevleri
   const handleDevam = async () => {
@@ -186,7 +186,6 @@ export default function Home() {
                   selectedRandevuId={selectedRandevuId}
                   setSelectedRandevuId={setSelectedRandevuId}
                   formattedData={formattedData}
-                  setFormattedData={setFormattedData}
                 />
               </Suspense>
             )}
@@ -239,6 +238,7 @@ export default function Home() {
             setSelectedRandevuId={setSelectedRandevuId}
             yonlendirme={yonlendirme}
             setYonlendirme={setYonlendirme}
+            bosRandevular={bosRandevular}
           />
         )}
       </div>

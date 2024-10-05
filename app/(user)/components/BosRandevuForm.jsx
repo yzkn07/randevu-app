@@ -131,7 +131,7 @@ export default function BosRandevuForm({
 
          {step === 3 && (
             bosRandevular.length > 0 ? (
-              <RandevuKartlari bosRandevular={formattedData} handleRandevu={handleRandevu}/>
+              <RandevuKartlari bosRandevular={bosRandevular} handleRandevu={handleRandevu}/>
             )
           : (
           <div className="flex justify-center items-center min-h-52">
