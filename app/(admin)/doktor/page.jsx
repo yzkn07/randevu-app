@@ -9,6 +9,11 @@ export default function Doktor() {
   const [polRandevulari, setPolRandevulari] = useState([]);
   const [showRandevuForm, setShowRandevuForm] = useState(false);
   const [showRandevuList, setShowRandevuList] = useState(true);
+  const [notification, setNotification] = useState(""); 
+  const [showModal, setShowModal] = useState(false);
+
+  const [baslangicTarihi, setBaslangicTarihi] = useState("");
+  const [bitisTarihi, setBitisTarihi] = useState("");
 
   function handleHasta() {
     return router.push("/private");
@@ -23,13 +28,33 @@ export default function Doktor() {
   }, []);
 
   const toggleRandevuForm = () => {
-      if (showRandevuList) setShowRandevuList(false);
+    if (showRandevuList) setShowRandevuList(false);
     setShowRandevuForm(true);
   };
 
   const toggleRandevuList = () => {
-      if (showRandevuForm) setShowRandevuForm(false);
-      setShowRandevuList(true);
+    if (showRandevuForm) setShowRandevuForm(false);
+    setShowRandevuList(true);
+  };
+
+  // Randevu ekleme fonksiyonu
+  const handleRandevuEkle = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    await randevuEkle(formData);
+
+  
+    setNotification("Randevu başarıyla eklendi!");
+    setShowModal(true); 
+    setBaslangicTarihi("");
+    setBitisTarihi("");
+
+  
+    setTimeout(() => {
+      setShowModal(false);
+      setNotification("");
+    }, 3000);
   };
 
   return (
@@ -62,10 +87,27 @@ export default function Doktor() {
         </button>
       </div>
 
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-sm">
+            <h1 className="text-lg font-bold mb-4 text-center text-green-700">
+              {notification}
+            </h1>
+            <button
+              onClick={() => setShowModal(false)}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md mx-auto block hover:bg-blue-600 transition duration-300"
+            >
+              Tamam
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Randevu Ekleme Formu */}
       {showRandevuForm && (
         <form
-          action={randevuEkle}
+          onSubmit={handleRandevuEkle}
           className="bg-slate-400 px-4 py-6 mx-auto my-4 w-3/4 flex flex-col justify-center items-center gap-4 rounded-2xl"
         >
           <label
@@ -79,6 +121,8 @@ export default function Doktor() {
             name="baslangicTarihi"
             id="baslangicTarihi"
             className="p-2 rounded-2xl w-full"
+            value={baslangicTarihi}
+            onChange={(e) => setBaslangicTarihi(e.target.value)}
           />
           <label
             htmlFor="bitisTarihi"
@@ -91,6 +135,8 @@ export default function Doktor() {
             name="bitisTarihi"
             id="bitisTarihi"
             className="p-2 rounded-2xl w-full"
+            value={bitisTarihi}
+            onChange={(e) => setBitisTarihi(e.target.value)}
           />
           <button className="mt-2 bg-white p-4 rounded-3xl font-semibold text-xl hover:bg-gray-200">
             Randevu Ekle
