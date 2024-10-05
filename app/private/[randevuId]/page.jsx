@@ -1,7 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
 import { randevuyuGoruntule, SaveRandevu } from "./action"
-import { formatRandevuData } from "@/utils/functions/functions";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 
@@ -36,7 +35,7 @@ useEffect(() => {
     fetchUserId();
 }, []);
 
-const formattedRandevu =  formatRandevuData(randevu)
+
 
 const handleAra = () => {
     router.push("/")

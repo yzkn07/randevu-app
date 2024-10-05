@@ -1,4 +1,5 @@
 "use server"
+import { formatRandevuData } from "@/utils/functions/functions";
 import { createClient } from "@/utils/supabase/server"
 
 export async function randevuyuGoruntule(randevuId) {
@@ -28,7 +29,8 @@ export async function randevuyuGoruntule(randevuId) {
     .eq('id', randevuId)
     .eq('musaitlik_durumu', 'bos');
 
-    return { randevu_slotlari }
+    const formattedRandevu = formatRandevuData(randevu_slotlari)
+    return { formattedRandevu }
     
 }
 
