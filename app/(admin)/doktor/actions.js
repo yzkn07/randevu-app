@@ -45,44 +45,38 @@ return  formattedRandevu ;
 
  export async function randevuEkle(formData){
 
-    const supabase = createClient()
+  const supabase = createClient()
 
-    const baslangicZamani = formData.get("baslangicTarihi")
-    const bitisZamani = formData.get("bitisTarihi")
-    
-    // Supabase formatına uygun ISO string olarak al
-    const baslangicDate = new Date(baslangicZamani).toISOString();
-    const bitisDate = new Date(bitisZamani).toISOString();
+  const baslangicZamani = formData.get("baslangicTarihi")
+  const bitisZamani = formData.get("bitisTarihi")
+  
+  // Date nesneleri oluştur
+  const baslangicDate = new Date(baslangicZamani);
+  const bitisDate = new Date(bitisZamani);
+  
+  // Saat dilimini Türkiye saati olarak tut
+  const baslangicISO = baslangicDate.toISOString().replace('Z', '+03:00');
+  const bitisISO = bitisDate.toISOString().replace('Z', '+03:00');
 
-    const { data: user } = await supabase.auth.getUser()
-    const doktorId = user.user.id
-    
-    // Randevu slotunu veritabanına ekle
+  const { data: user } = await supabase.auth.getUser()
+  const doktorId = user.user.id
+  
+  // Randevu slotunu veritabanına ekle
   const { data, error } = await supabase
-  .from('randevu_slotlari')
-  .insert([
-    {
-      doktor_id: doktorId,
-      baslangic_zamani: baslangicDate,
-      bitis_zamani: bitisDate,
-      musaitlik_durumu: 'bos', 
-      hasta_id: null,
-    },
+    .from('randevu_slotlari')
+    .insert([
+      {
+        doktor_id: doktorId,
+        baslangic_zamani: baslangicISO,
+        bitis_zamani: bitisISO,
+        musaitlik_durumu: 'bos', 
+        hasta_id: null,
+      },
     ])
 
-    if (error) {
-        console.error('Randevu eklenirken hata:', error);
-    } else {
-        console.log('Randevu başarıyla eklendi:', data);
-    }
-  
-    // console.log(baslangicZamani, "baslangicZamani");
-
-    // console.log("2024-10-04T15:22", "datetime-locale formData'dan gelen format");
-    // console.log("baslangic_zamani: '2024-10-03T23:48:48+00:00',", "supabaseden gelen format");
-    // console.log("2024-10-04T14:00:00.000Z", "baslangic new Date:");
-    // console.log("2024-10-04T14:00:00.000Z", "baslangicISOstring:");
-
-    // zamanı supabase gönderebilecek uygun format new date + isosstring sanırım
-    
- }
+  if (error) {
+      console.error('Randevu eklenirken hata:', error);
+  } else {
+      console.log('Randevu başarıyla eklendi:', data);
+  }
+}

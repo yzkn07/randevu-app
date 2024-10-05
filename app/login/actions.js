@@ -73,13 +73,13 @@ export async function signup(formData) {
   }
 
   revalidatePath('/', 'layout')
-
- if (randevuId) {
-  // Eğer randevuId varsa, login formuna randevuId parametresiyle birlikte yönlendir
-  redirect(`/login?randevu-id=${randevuId}&isLogin=true`);
-} else {
-  redirect('/login?isLogin=true');
-}
+  
+  if (randevuId) {
+    // Eğer randevuId varsa, login formuna randevuId parametresiyle birlikte yönlendir
+    redirect(`/login?randevu-id=${randevuId}&isLogin=true`);
+  } else {
+    redirect('/login?isLogin=true');
+  }
 }
 
 
