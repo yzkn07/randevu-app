@@ -58,7 +58,7 @@ export default function SelectedInfos({
                 <div className="flex justify-start items-center">
                     <p>randevu:</p>
                     <p className="bg-slate-500 p-4 m-2 rounded-xl text-white">
-                    {selectedRandevu.baslangic_zamani} 
+                    {selectedRandevuModal.randevu_zamani} 
                     </p>
                 </div>
             )}

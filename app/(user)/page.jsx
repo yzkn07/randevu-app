@@ -67,13 +67,7 @@ export default function Home() {
     }
   }, [step, selectedDoktorId]);
 
-  // boş randevular getirilince, formatlanır.
-  // useEffect(() => {
-  //   if (bosRandevular.length > 0) {
-  //     const formattedBosRandevular = formatRandevuData(bosRandevular);
-  //     setBosRandevular(formattedBosRandevular)
-  //   }
-  // }, [bosRandevular]);
+
 
   // devam et butonunun işlevleri
   const handleDevam = async () => {
