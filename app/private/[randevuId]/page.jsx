@@ -11,14 +11,14 @@ export default function Randevu({ params }) {
     const [randevu, setRandevu] = useState([])
     const [userId, setUserId] = useState(null)
     const [ randevuOnayModal, setRandevuOnayModal] = useState(false)
-
+    const [formattedRandevu, setFormattedRandevu] = useState([])
 
     useEffect(() => {
         async function fetchRandevu(){
           const randevuData = await randevuyuGoruntule(randevuId); 
-          setRandevu(randevuData.randevu_slotlari)
+          setFormattedRandevu(randevuData)
 
-
+          
     }
     fetchRandevu();
 }, [randevuId]);  

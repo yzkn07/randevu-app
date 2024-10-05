@@ -30,7 +30,7 @@ export async function randevuyuGoruntule(randevuId) {
     .eq('musaitlik_durumu', 'bos');
 
     const formattedRandevu = formatRandevuData(randevu_slotlari)
-    return { formattedRandevu }
+    return  formattedRandevu 
     
 }
 
