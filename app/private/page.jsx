@@ -31,8 +31,8 @@ export default function PrivatePage() {
         setUserEmail(data.user.email);
       }
       const randevu_slotlari = await GetRandevu() || [];
+      setFormattedRandevuSlotlari(randevu_slotlari)
       
-      setFormattedRandevuSlotlari(randevu_slotlari);
     }
     
     fetchUserData();

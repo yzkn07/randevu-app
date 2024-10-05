@@ -1,4 +1,5 @@
 "use server"
+import { formatRandevuData } from "@/utils/functions/functions";
 import { createClient } from "@/utils/supabase/server";
 
 export default  async function GetRandevu(){
@@ -44,11 +45,10 @@ export default  async function GetRandevu(){
       
       }
 
-    
+      const formattedRandevu = formatRandevuData(randevu_slotlari)
     // console.log(randevu_slotlari);
-    const formattedData = formatRandevuData(randevu_slotlari);
 
-      return formattedData;
+      return formattedRandevu;
 }
 
 export async function CancelRandevu(randevuId) {
