@@ -61,7 +61,7 @@ export default function Home() {
     if (step === 2 && selectedDoktorId) {
       async function fetchRandevular() {
         const randevuData = await getRandevuSlotlari(selectedDoktorId);
-        setBosRandevular(randevuData.randevu_slotlari);
+        setBosRandevular(randevuData);
       }
       fetchRandevular();
     }
