@@ -55,8 +55,11 @@ return  formattedRandevu ;
   const bitisDate = new Date(bitisZamani);
   
   // Saat dilimini Türkiye saati olarak tut
-  const baslangicISO = baslangicDate.toISOString().replace('Z', '+03:00');
-  const bitisISO = bitisDate.toISOString().replace('Z', '+03:00');
+  // const baslangicISO = baslangicDate.toISOString().replace('Z', '+03:00');
+  // const bitisISO = bitisDate.toISOString().replace('Z', '+03:00');
+  // Saat dilimini Türkiye saati olarak tut
+  const baslangicISO = baslangicDate.toISOString();
+  const bitisISO = bitisDate.toISOString();
 
   const { data: user } = await supabase.auth.getUser()
   const doktorId = user.user.id
