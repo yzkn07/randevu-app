@@ -46,8 +46,9 @@ export default  async function GetRandevu(){
 
     
     // console.log(randevu_slotlari);
+    const formattedData = formatRandevuData(randevu_slotlari);
 
-      return randevu_slotlari;
+      return formattedData;
 }
 
 export async function CancelRandevu(randevuId) {
