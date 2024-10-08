@@ -143,7 +143,7 @@ export default function Home() {
 
       {isAuthenticated && (
         <div className="border w-fit border-blue-400 text-black bg-white active:bg-blue-600 p-2 rounded-lg m-2">
-          <Link href={"/private"}>Randevularım</Link>
+          <Link href={"/private"}>Randevularım </Link>
         </div>
       )}
       
